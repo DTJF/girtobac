@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<type search="cairo_font_type_t" add=" PTR"/>
+<type search="PangoFcFontMap" replace="any ptr /' PangoFcFontMap '/"/>
+<type search="FT_Library" replace="any ptr /' FT_Library '/"/>

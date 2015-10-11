@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+
+<type search="void" replace="any /'void'/"/>

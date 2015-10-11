@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<name search="rgba" add="_ /'rgba'/"/>
+<name search="gtk_stock_add" add='_ ALIAS "gtk_stock_add" '/>
+
+<type search="GdkAtom" replace="any ptr /'GdkAtom'/"/>
+<type search="int" replace="gint /'int'/"/>
+<type search="unsigned" replace="guint32 /'unsigned'/"/>
+<type search="Window" replace="guint32 /'Window'/"/>
+<type search="void" replace="any /'void'/"/>
+
+<first search="GtkRcPropertyParser"/>
+<first search="GtkTickCallback"/>
+<first search="GtkBuilderConnectFunc"/>
+<first search="GtkWidget"/>
+<first search="GtkWidgetClass"/>
+<first search="GtkCallback"/>
+<first search="GtkContainer"/>
+<first search="GtkContainerClass"/>
+<first search="GtkBin"/>
+<first search="GtkBinClass"/>
+<first search="GtkWindow"/>
+<first search="GtkWindowClass"/>
+<first search="GtkDialog"/>
+<first search="GtkDialogClass"/>
+<first search="GtkAccelGroupFindFunc"/>
+<first search="GtkAccelMapForeach"/>
+<first search="GtkTranslateFunc"/>
+<first search="GtkAccelKey"/>
+<first search="GtkMisc"/>
+<first search="GtkMiscClass"/>
+<first search="GtkLabel"/>
+<first search="GtkLabelClass"/>
+<first search="GtkTreeViewRowSeparatorFunc"/>
+<first search="GtkComboBox"/>
+<first search="GtkComboBoxClass"/>
+<first search="GtkBox"/>
+<first search="GtkBoxClass"/>
+<first search="GtkFrame"/>
+<first search="GtkFrameClass"/>
+<first search="GtkAssistantPageFunc"/>
+<first search="GtkCalendarDetailFunc"/>
+<first search="GtkCellCallback"/>
+<first search="GtkCellRenderer"/>
+<first search="GtkCellRendererClass"/>
+<first search="GtkCellAllocCallback"/>
+<first search="GtkCellAreaClass"/>
+<first search="GtkCellLayoutDataFunc"/>
+<first search="GtkCellRendererText"/>
+<first search="GtkCellRendererTextClass"/>
+<first search="GtkButton"/>
+<first search="GtkButtonClass"/>
+<first search="GtkToggleButton"/>
+<first search="GtkToggleButtonClass"/>
+<first search="GtkClipboardReceivedFunc"/>
+<first search="GtkClipboardImageReceivedFunc"/>
+<first search="GtkClipboardRichTextReceivedFunc"/>
+<first search="GtkClipboardTargetsReceivedFunc"/>
+<first search="GtkClipboardTextReceivedFunc"/>
+<first search="GtkClipboardURIReceivedFunc"/>
+<first search="GtkClipboardGetFunc"/>
+<first search="GtkClipboardClearFunc"/>
+<first search="GtkMenuItem"/>
+<first search="GtkMenuItemClass"/>
+<first search="GtkColorSelectionChangePaletteWithScreenFunc"/>
+<first search="GtkEntryCompletionMatchFunc"/>
+<first search="GtkFileFilterFunc"/>
+<first search="GtkFontFilterFunc"/>
+<first search="GtkPaned"/>
+<first search="GtkPanedClass"/>
+<first search="GtkRange"/>
+<first search="GtkRangeClass"/>
+<first search="GtkScale"/>
+<first search="GtkScaleClass"/>
+<first search="GtkScrollbar"/>
+<first search="GtkScrollbarClass"/>
+<first search="GtkSeparator"/>
+<first search="GtkSeparatorClass"/>
+<first search="GtkIconViewForeachFunc"/>
+<first search="GtkMenuShell"/>
+<first search="GtkMenuShellClass"/>
+<first search="GtkMenuDetachFunc"/>
+<first search="GtkMenuPositionFunc"/>
+<first search="GtkToolItem"/>
+<first search="GtkToolItemClass"/>
+<first search="GtkToolButton"/>
+<first search="GtkToolButtonClass"/>
+<first search="GtkPrintSettingsFunc"/>
+<first search="GtkAction"/>
+<first search="GtkActionClass"/>
+<first search="GtkToggleAction"/>
+<first search="GtkToggleActionClass"/>
+<first search="GtkToggleToolButton"/>
+<first search="GtkToggleToolButtonClass"/>
+<first search="GtkRecentSortFunc"/>
+<first search="GtkRecentFilterFunc"/>
+<first search="GtkStylePropertyParser"/>
+<first search="GtkTextBufferDeserializeFunc"/>
+<first search="GtkTextBufferSerializeFunc"/>
+<first search="GtkTextTagTableForeach"/>
+<first search="GtkTreeModelForeachFunc"/>
+<first search="GtkTreeModelFilterModifyFunc"/>
+<first search="GtkTreeModelFilterVisibleFunc"/>
+<first search="GtkTreeSelectionFunc"/>
+<first search="GtkTreeSelectionForeachFunc"/>
+<first search="GtkTreeViewSearchEqualFunc"/>
+<first search="GtkTreeViewSearchPositionFunc"/>
+<first search="GtkTreeViewMappingFunc"/>
+<first search="GtkTreeViewColumnDropFunc"/>
+<first search="GtkRcPropertyParser"/>
+<first search="GtkListBoxFilterFunc"/>
+<first search="GtkListBoxUpdateHeaderFunc"/>
+<first search="GtkListBoxSortFunc"/>

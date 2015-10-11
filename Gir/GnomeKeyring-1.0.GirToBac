@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<type search="PasswordSchemaAttribute" replace="GnomeKeyringPasswordSchemaAttribute"/>
+
+<first search="GnomeKeyringPasswordSchemaAttribute"/>

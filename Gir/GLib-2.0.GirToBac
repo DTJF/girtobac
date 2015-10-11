@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<pack name="G"/>
+
+<name search="G_CSET_a_2_z" add="_ /'G_CSET_a_2_z'/"/>
+<name search="g_source_remove" add='_ ALIAS "g_source_remove"'/>
+
+<type search="int" replace="gint /'int'/"/>
+<type search="const int" replace="const gint32 /'int'/"/>
+<type search="void" replace="any /'void'/"/>
+<type search="tm" replace="any /'tm'/"/>
+<type search="goffset" replace="gint32 /'goffset'/"/>
+<type search="long double" replace="double /'long double'/"/>
+<type search="GIConv" replace="GIConv PTR /'GIConv'/"/>
+<type search="GLib.Variant" replace="GVariant ptr /'GLib.Variant'/"/>
+
+<first search="GDestroyNotify"/>
+<first search="GCompareDataFunc"/>
+<first search="GCompareFunc"/>
+<first search="GMutex"/>
+<first search="GHookFindFunc"/>
+<first search="GHookCompareFunc"/>
+<first search="GHookMarshaller"/>
+<first search="GPollFunc"/>
+<first search="GSourceFunc"/>
+<first search="GNodeForeachFunc"/>
+<first search="GNodeTraverseFunc"/>
+<first search="GThreadFunc"/>
+<first search="GTranslateFunc"/>
+<first search="GOptionParseFunc"/>
+<first search="GRegexEvalCallback"/>
+<first search="GTokenValue"/>
+<first search="GScannerMsgFunc"/>
+<first search="GSequenceIterCompareFunc"/>

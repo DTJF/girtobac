@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<pack name="G"/>
+
+<name search="g_type_check_instance" add='_ ALIAS "g_type_check_instance"'/>
+<name search="g_type_check_instance_cast" add='_ ALIAS "g_type_check_instance_cast"'/>
+<name search="g_type_check_class_cast" add='_ ALIAS "g_type_check_class_cast"'/>
+<name search="g_type_check_value" add='_ ALIAS "g_type_check_value"'/>
+<name search="g_type_instance_get_private" add='_ ALIAS "g_type_instance_get_private"'/>
+<name search="g_type_class_get_private" add='_ ALIAS "g_type_class_get_private"'/>
+<name search="g_type_fundamental" add='_ ALIAS "g_type_fundamental"'/>
+
+<type search="int" replace="gint /'int'/"/>
+<type search="GPixdataType" replace="GdkPixdataType /'GPixdataType'/"/>
+<type search="GPixdataDumpType" replace="GdkPixdataDumpType /'GPixdataDumpType'/"/>
+
+<first search="GCallback"/>
+<first search="GClosureNotify"/>
+<first search="GClosureMarshal"/>
+<first search="GClosure"/>
+<first search="GTypePluginUse"/>
+<first search="GTypePluginUnuse"/>
+<first search="GTypePluginCompleteTypeInfo"/>
+<first search="GTypePluginCompleteInterfaceInfo"/>
+<first search="GTypeClass"/>
+<first search="GTypeInstance"/>
+<first search="GInterfaceInitFunc"/>
+<first search="GToggleNotify"/>
+<first search="GWeakNotify"/>
+<first search="GValueTransform"/>
+<first search="_Value__data__union"/>
+<first search="GValue"/>

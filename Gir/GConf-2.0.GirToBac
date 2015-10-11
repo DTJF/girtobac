@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<type search="int" replace="gint /'int'/"/>
+
+<first search="GConfChangeSetForeachFunc"/>
+<first search="GConfClientErrorHandlerFunc"/>
+<first search="GConfClientNotifyFunc"/>
+<first search="GConfNotifyFunc"/>
+<first search="GConfListenersForeach"/>
+<first search="GConfListenersCallback"/>
+<first search="GConfListenersPredicate"/>

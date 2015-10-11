@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<pack name="Goo"/>
+
+<type search="int" replace="gint /'int'/"/>
+
+<first search="GooCanvasBounds"/>
+<first search="GooCanvasItemSimple"/>
+<first search="GooCanvasItemSimpleClass"/>
+<first search="GooCanvasItemSimpleData"/>
+<first search="GooCanvasItemModelSimple"/>
+<first search="GooCanvasItemModelSimpleClass"/>
+<first search="GooCanvasTableDimension"/>

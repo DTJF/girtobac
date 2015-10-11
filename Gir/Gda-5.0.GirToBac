@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<type search="xmlNodePtr" replace="any ptr /' xmlNodePtr '/"/>
+<type search="const xmlNodePtr" replace="const any ptr /' const xmlNodePtr '/"/>
+<type search="GObject.Value" replace="GValue /' GObject.Value '/"/>
+<type search="void" replace="any /' void '/"/>
+<type search="int" replace="gint /' int '/"/>
+
+<first search="GdaAttributesManagerFunc"/>
+<first search="GdaAttributesManagerSignal"/>
+<first search="GdaSet"/>
+<first search="GdaSetClass"/>
+<first search="GdaSqlReservedKeywordsFunc"/>
+<first search="GdaServerProviderExecCallback"/>
+<first search="GdaServerProviderMeta"/>
+<first search="GdaSqlForeachFunc"/>
+<first search="GdaSqlRenderingValue"/>
+<first search="GdaSqlRenderingPSpecFunc"/>
+<first search="GdaThreadWrapperCallback"/>
+<first search="GdaThreadWrapperFunc"/>
+<first search="GdaThreadWrapperVoidFunc"/>
+<first search="GdaTreeManagerNodesFunc"/>
+<first search="GdaTreeManagerNodeFunc"/>
+<first search="GdaSqlRenderingExpr"/>
+<first search="GdaSqlRenderingFunc"/>
+
+<type search="GdaSqlParamSpec" replace="any ptr /' GdaSqlParamSpec '/"/>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<name search='webkit_dom_document_get_webkit_full_screen_keyboard_input_allowed' replace='webkit_dom_document_get_webkit_full_screen_kbd_input_allowed'/>
+<name search='webkit_dom_html_media_element_get_webkit_audio_decoded_byte_count' replace='webkit_dom_html_media_element_get_webkit_audio_decoded_byte_cnt'/>
+<name search='webkit_dom_html_media_element_get_webkit_video_decoded_byte_count' replace='webkit_dom_html_media_element_get_webkit_video_decoded_byte_cnt'/>
+<name search='webkit_spell_checker_get_autocorrect_suggestions_for_misspelled_word' replace='webkit_spell_checker_get_autocorrect_suggestions_misspelled_word'/>
+<name search='webkit_major_version' add='_ ALIAS "webkit_major_version"'/>
+<name search='webkit_micro_version' add='_ ALIAS "webkit_micro_version"'/>
+<name search='webkit_minor_version' add='_ ALIAS "webkit_minor_version"'/>
+
+<type search="JSGlobalContextRef" add=" PTR"/>
+<type search="JSObjectRef" add=" PTR"/>
+<type search="int" replace="gint /'int'/"/>
+<type search="unsigned long long" replace="guint64 /'unsigned long long'/"/>
+
+<first search="WebKitDOMObject"/>
+<first search="WebKitDOMObjectClass"/>
+<first search="WebKitDOMNode"/>
+<first search="WebKitDOMNodeClass"/>
+<first search="WebKitDOMCharacterData"/>
+<first search="WebKitDOMCharacterDataClass"/>
+<first search="WebKitDOMText"/>
+<first search="WebKitDOMTextClass"/>
+<first search="WebKitDOMStyleSheet"/>
+<first search="WebKitDOMStyleSheetClass"/>
+<first search="WebKitDOMDOMTokenList"/>
+<first search="WebKitDOMDOMTokenListClass"/>
+<first search="WebKitDOMElement"/>
+<first search="WebKitDOMElementClass"/>
+<first search="WebKitDOMHTMLElement"/>
+<first search="WebKitDOMHTMLElementClass"/>
+<first search="WebKitDOMHTMLMediaElement"/>
+<first search="WebKitDOMHTMLMediaElementClass"/>
+<first search="WebKitDOMEvent"/>
+<first search="WebKitDOMEventClass"/>
+<first search="WebKitDOMUIEvent"/>
+<first search="WebKitDOMUIEventClass"/>

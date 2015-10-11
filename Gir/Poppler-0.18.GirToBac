@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<name search="POPPLER_ANNOT_FILE_ATTACHMENT" add='_'/>
+<name search="POPPLER_ANNOT_FREE_TEXT" add='_'/>
+<name search="POPPLER_ANNOT_MOVIE" add='_'/>
+<name search="POPPLER_ANNOT_SCREEN" add='_'/>
+<name search="POPPLER_ANNOT_TEXT" add='_'/>
+
+<type search="int" replace="gint /'int'/"/>
+
+<first search="PopplerActionAny"/>
+<first search="PopplerActionGotoDest"/>
+<first search="PopplerActionGotoRemote"/>
+<first search="PopplerActionLaunch"/>
+<first search="PopplerActionUri"/>
+<first search="PopplerActionNamed"/>
+<first search="PopplerActionMovie"/>
+<first search="PopplerActionRendition"/>
+<first search="PopplerActionOCGState"/>
+<first search="PopplerActionJavascript"/>
+<first search="PopplerRectangle"/>
+<first search="PopplerAttachmentSaveFunc"/>
+<first search="PopplerMediaSaveFunc"/>

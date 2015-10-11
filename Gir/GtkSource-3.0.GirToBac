@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+
+<type search="const gchar* const" replace="const gchar PTR const /'const gchar* const'/"/>

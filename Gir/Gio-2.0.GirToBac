@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<pack name="G"/>
+
+<name search="G_DBUS_INTERFACE_SKELETON_FLAGS_HANDLE_METHOD_INVOCATIONS_IN_THREAD" replace="G_DBUS_INTERFACE_SKELETON_FLAGS_HANDLE_METHOD_INVOCATIONS_IN_TH /'...READ'/"/>
+<name search="g_file_monitor" add='_ ALIAS "g_file_monitor"'/>
+
+<type search="int" replace="gint /'int'/"/>
+<type search="char" replace="gchar /'char'/"/>
+<type search="void" replace="any /'void'/"/>
+<type search="uid_t" replace="gint32 /'uid_t'/"/>
+<type search="pid_t" replace="gint32 /'pid_t'/"/>
+<type search="goffset" replace="gint32 /'goffset'/"/>
+<type search="GLib.Variant" replace="GVariant ptr /'GLib.Variant'/"/>
+<type search="const gchar* const" replace="const gchar ptr const /'const gchar* const'/"/>
+<type search="const char* const" replace="const gchar ptr const /'const char* const'/"/>
+
+<first search="GAsyncReadyCallback"/>
+<first search="GInputStream"/>
+<first search="GInputStreamClass"/>
+<first search="GOutputStream"/>
+<first search="GOutputStreamClass"/>
+<first search="GFilterInputStream"/>
+<first search="GFilterInputStreamClass"/>
+<first search="GFilterOutputStream"/>
+<first search="GFilterOutputStreamClass"/>
+<first search="GDBusMessageFilterFunction"/>
+<first search="GDBusSignalCallback"/>
+<first search="GDBusProxyTypeFunc"/>
+<first search="GDesktopAppLaunchCallback"/>
+<first search="GFileProgressCallback"/>
+<first search="GFileReadMoreCallback"/>
+<first search="GIOStream"/>
+<first search="GIOStreamClass"/>
+<first search="GSocketAddress"/>
+<first search="GSocketAddressClass"/>
+<first search="GReallocFunc"/>
+<first search="GVolumeMonitor"/>
+<first search="GVolumeMonitorClass"/>
+<first search="GSocketAddressEnumerator"/>
+<first search="GSocketAddressEnumeratorClass"/>
+<first search="GSettingsBindGetMapping"/>
+<first search="GSettingsBindSetMapping"/>
+<first search="GSettingsGetMapping"/>
+<first search="GSimpleAsyncThreadFunc"/>
+<first search="GTaskThreadFunc"/>
+<first search="GFileMeasureProgressCallback"/>

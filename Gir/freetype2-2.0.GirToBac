@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+
+<type search="int32" replace="gint32 /'int32'/"/>

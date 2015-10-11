@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<type search="int" replace="gint /'int'/"/>
+<type search="unsigned int" replace="guint32 /'unsigned int'/"/>
+
+<first search="PangoAttribute"/>
+<first search="PangoColor"/>
+<first search="PangoRectangle"/>
+<first search="PangoFontsetForeachFunc"/>
+<first search="PangoGlyphVisAttr"/>

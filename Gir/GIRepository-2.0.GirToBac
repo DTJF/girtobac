@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<type search="void" replace="any /'void'/"/>
+<type search="void*" replace="any ptr /'void*'/"/>
+<type search="int" replace="gint /'int'/"/>

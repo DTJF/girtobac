@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<type search="GdkAtom" replace="any ptr /'GdkAtom'/"/>
+<type search="Window" replace="any ptr /'Window'/"/>
+<type search="Screen" replace="any ptr /'Screen'/"/>
+<type search="int" replace="gint /'int'/"/>

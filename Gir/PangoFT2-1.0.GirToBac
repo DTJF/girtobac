@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<type search="FT_Face" add=" PTR"/>
+<type search="int" replace="gint /'int'/"/>
+
+<first search="PangoFT2SubstituteFunc"/>

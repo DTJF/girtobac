@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+
+<binary name="cairo"/>
+<check name="CAIRO_H"/>

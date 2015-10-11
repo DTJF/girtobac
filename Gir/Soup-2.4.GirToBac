@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<name search='soup_auth_is_authenticated' add='_ ALIAS "soup_auth_is_authenticated"'/>
+<name search='soup_auth_is_for_proxy' add='_ ALIAS "soup_auth_is_for_proxy"'/>
+<name search='soup_auth_domain_add_path' add='_ ALIAS "soup_auth_domain_add_path"'/>
+<name search='soup_auth_domain_remove_path' add='_ ALIAS "soup_auth_domain_remove_path"'/>
+
+<type search="int" replace="gint"/>
+<type search="sockaddr" replace="ANY PTR /'sockaddr'/"/>
+<type search="goffset" replace="guint /'goffset'/"/>
+<type search="const char" replace="const gchar /'const char'/"/>
+<type search="GObject.Value" replace="GValue PTR /'GObject.Value'/"/>
+
+<first search="SoupAddressCallback"/>
+<first search="SoupAuthDomainBasicAuthCallback"/>
+<first search="SoupAuthDomainDigestAuthCallback"/>
+<first search="SoupAuthDomainFilter"/>
+<first search="SoupAuthDomainGenericAuthCallback"/>
+<first search="SoupAuthDomainClass"/>
+<first search="SoupLoggerPrinter"/>
+<first search="SoupLoggerFilter"/>
+<first search="SoupMessageHeadersForeachFunc"/>
+<first search="SoupProxyURIResolverCallback"/>
+<first search="SoupServerCallback"/>
+<first search="SoupSessionCallback"/>
+<first search="SoupSessionClass"/>
+<first search="SoupSocketCallback"/>
