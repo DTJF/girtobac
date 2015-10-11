@@ -28,7 +28,7 @@ SET(HTM_FILE ${CMAKE_CURRENT_BINARY_DIR}/html/index.html)
 
 SET(htmconf ${CMAKE_CURRENT_BINARY_DIR}/HtmConf)
 SET(pdfconf ${CMAKE_CURRENT_BINARY_DIR}/PdfConf)
-SET(lfn ${CMAKE_CURRENT_SOURCE_DIR}/girtobac.lfn)
+SET(lfn ${CMAKE_CURRENT_SOURCE_DIR}/fb-doc.lfn)
 SET(MD_SRC
     ../ReadMe.md
     ../_Tutorial.md
@@ -39,6 +39,7 @@ SET(deps
     ${lfn}
     ${MD_SRC}
     ../src/${PROJ_NAME}.bas
+    ../src/${PROJ_NAME}_RepData.bas
     ../_ReadMe.md.in
     ${CMAKE_CURRENT_SOURCE_DIR}/DoxyExtension.in
     ${CMAKE_CURRENT_SOURCE_DIR}/girtobac.xml

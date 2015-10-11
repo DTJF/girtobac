@@ -18,7 +18,7 @@ to the project page at
 
 or to the
 
-- [forum page](http://www.freebasic.net/forum/viewtopic.php?f=8&t=19810)
+- [forum page](http://www.freebasic.net/forum/viewtopic.php?p=190158)
 
 or feel free to send your ideas directly to the author (\Email).
 
@@ -26,7 +26,7 @@ or feel free to send your ideas directly to the author (\Email).
 Versions  {#SecVersions}
 ========
 
-Here's a list of the published version:
+Here's a list of the published versions:
 
 girtobac-0.4  {#SubSecV-0-4}
 ------------
@@ -37,7 +37,7 @@ New:
 - renamed for GIT (lower case)
 - hosted on GitHub.com
 - CMake build scripts for executable and documentation
-- code listings without documentational comments
+- code listings clean of documentational comments
 
 Bugfixes:
 
@@ -53,7 +53,7 @@ New:
 
 - GirToBac source 32/64 bit ready.
 - Translated header code 32/64 bit ready.
-- Self translated GLib header in use, see [GnomeHeaders-1.0](http://www.freebasic-portal.de/downloads/bibliotheken/gtk-3-header-dateien-fuer-freebasic-191.html).
+- Self translated GLib header in use.
 - Configuraton file attributes \em binary, \em check and \em pack.
 - Caller / callee graphs in the documentation.
 
