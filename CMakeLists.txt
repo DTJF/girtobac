@@ -10,6 +10,9 @@
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.3)
 
+# add search path if cmakefbc isn't installed
+LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
 # constants
 SET(PROJ_NAME "girtobac"           CACHE STRING "project name" FORCE)
 SET(PROJ_DESC "Create FB Headers from GObject Introspection *.gir files" CACHE STRING "project description" FORCE)
@@ -20,8 +23,9 @@ SET(PROJ_WEBS "https://github.com/DTJF/girtobac" CACHE STRING "project website" 
 SET(PROJ_LICE "GPLv3"              CACHE STRING "project licence" FORCE)
 SET(PROJ_YEAR "2015"               CACHE STRING "project year" FORCE)
 
-# Uncomment the next two lines to perform a standard build.
-LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+# declare the project name and the language (compiler) to use
+PROJECT(${PROJ_NAME} Fbc)
+
 ADD_SUBDIRECTORY(src)
 
 ADD_SUBDIRECTORY(doc)
@@ -29,4 +33,18 @@ ADD_SUBDIRECTORY(doc)
 PROJECT(${PROJ_NAME} Fbc)
 
 CONFIGURE_FILE(_ReadMe.md.in ${CMAKE_SOURCE_DIR}/ReadMe.md @ONLY)
+
+
+# declare installation rules
 #INSTALL(DIRECTORY cmake/Modules DESTINATION ${CMAKE_ROOT})
+
+GET_FILENAME_COMPONENT(fbpath ${CMAKE_Fbc_COMPILER} PATH)
+IF(UNIX)
+  SET(girdest ${fbpath}/../include/freebasic)
+ELSE()
+  SET(girdest ${fbpath}/../inc/freebasic)
+ENDIF()
+
+INSTALL(DIRECTORY Gir DESTINATION ${girdest}
+  FILES_MATCHING PATTERN "*.bi"
+  )

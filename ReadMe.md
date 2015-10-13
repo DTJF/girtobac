@@ -12,14 +12,14 @@ programming language to this tool-chain for easy creating and up-dating
 FreeBasic header files of GObject based libraries (ie. like GTK, GDA,
 GooCanvas, ...).
 
-The package is [hosted at GitHub](http://github.com/DTJF/girtobac) and contains
+The package is [hosted at GitHub](https://github.com/DTJF/girtobac) and it contains
 
-- the *girtobac* source code in folder src
-- the header GLib-2.0.bi in folder Gir
-- an example input file GIO-2.0.gir in folder example
-- several configuration files (*.GirToBac) in folder Gir
-- the configuration files to build the documentation in folder doc
-- the documentation context in .md files in root folder
+- the *girtobac* source code in folder *src*
+- the header GLib-2.0.bi in folder *Gir*
+- an example input file GIO-2.0.gir in folder *example*
+- several configuration files (*.GirToBac) in folder *Gir*
+- the configuration files to build the documentation in folder *doc*
+- the documentation context in .md files in *root* folder
 - CMake scripts to build the targets all, doc, doc_htm, doc_pdf
 
 Find the online documentation at
@@ -34,7 +34,7 @@ filtering.)
 Licence
 =======
 
-GPLv3: Copyright (C) 2013-2015, Thomas{ At ]Freiherr{ at }gmx[ dOt ]net
+GPLv3: Copyright (C) 2013-2015, Thomas{ doT ]Freiherr[ At ]gmx[ DoT }net
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

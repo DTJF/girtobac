@@ -9,6 +9,7 @@ Further Development  {#SecToDo}
 there's still some potential optimization, like:
 
 - finish OOP support (... when the fbc got it)
+- more automated features like sorting the order or resolving double DECLARES
 - ...
 
 Feel free to post your ideas, bug reports, wishes or patches, either
@@ -38,10 +39,12 @@ New:
 - hosted on GitHub.com
 - CMake build scripts for executable and documentation
 - code listings clean of documentational comments
+- options -h and -v
 
 Bugfixes:
 
 - Minor adaptions in the documentation context
+- more user information in output
 
 Released on 2015 October, 11.
 

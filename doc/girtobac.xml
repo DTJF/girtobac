@@ -5,6 +5,8 @@
     <tab type="mainpage" visible="yes" title=""/>
     <tab type="pages" visible="no" title="" intro=""/>
     <tab type="usergroup" title="Description">
+      <tab type="user" url="@ref PagIntroduction" title="Introduction"/>
+      <tab type="user" url="@ref PagPreparation" title="Preparation"/>
       <tab type="user" url="@ref PagTutorial" title="Tutorial"/>
       <tab type="user" url="@ref PagChangelog" title="Changelog"/>
     </tab>
