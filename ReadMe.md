@@ -16,7 +16,7 @@ The package is [hosted at GitHub](https://github.com/DTJF/girtobac) and it conta
 
 - the *girtobac* source code in folder *src*
 - the header GLib-2.0.bi in folder *Gir*
-- an example input file GIO-2.0.gir in folder *example*
+- an example input file GLib-2.0.gir in folder *example*
 - several configuration files (*.GirToBac) in folder *Gir*
 - the configuration files to build the documentation in folder *doc*
 - the documentation context in .md files in *root* folder

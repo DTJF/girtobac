@@ -1,27 +1,36 @@
 /'* \file girtobac_text.bi
-\brief Header with help and version texts
+\brief Header with informations on the executable and help and version texts
 
 This file contains some informational texts for the user interface,
 namely the version and help texts.
 
 '/
 
-'* New line character macro (for better readability)
 #IFDEF __FB_UNIX__
+ '* The new line charater[s]
  #DEFINE NL !"\n" &
+ '* The target operation system
  #DEFINE TARG "UNIX"
 #ELSE
+'&/* Doxygen shouldn't see this
  #DEFINE NL !"\r\n" &
  #DEFINE TARG "DOS/windows"
+'&*/
 #ENDIF
 
+'* The welcome message for options -h and -v
 #DEFINE MSG_WELCOME _
   "  @PROJ_NAME@-@PROJ_VERS@, License @PROJ_LICE@" & NL  _
   "  Copyright (C) 2012-@PROJ_YEAR@ by @PROJ_MAIL@"
 
+'* Compiler information (for option -v)
 #DEFINE MSG_COMPILE _
   "  Compiled: " & __DATE__ & ", " & __TIME__ & " with " & __FB_SIGNATURE__ & " for " & TARG
 
-#DEFINE V_TEXT MSG_WELCOME & NL MSG_COMPILE
+'* The text for option -v
+#DEFINE V_TEXT _
+  MSG_WELCOME & NL MSG_COMPILE
 
-#define H_TEXT MSG_WELCOME & NL NL "Pass in filename as (solely) parameter!"
+'* \brief The text for option -h
+#DEFINE H_TEXT _
+  MSG_WELCOME & NL NL "Pass in filename as (solely) parameter!"

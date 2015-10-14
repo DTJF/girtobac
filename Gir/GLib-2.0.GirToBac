@@ -12,7 +12,6 @@
 <type search="goffset" replace="gint32 /'goffset'/"/>
 <type search="long double" replace="double /'long double'/"/>
 <type search="GIConv" replace="GIConv PTR /'GIConv'/"/>
-<type search="GLib.Variant" replace="GVariant ptr /'GLib.Variant'/"/>
 
 <first search="GDestroyNotify"/>
 <first search="GCompareDataFunc"/>

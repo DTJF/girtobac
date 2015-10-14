@@ -44,7 +44,7 @@ for advanced features in the FB compiler.
 # How to get started?  {#SecStart}
 
 As an example the file <em>example/GLib-2.0.gir</em> is shipped with
-these package. You can make your first translation using this file
+this package. You can make your first translation using this file
 and compare the output against the file <em>Gir/GLib-2.0.bi.org</em>
 to check the \Proj executable and get familar with how to call
 \Proj.
@@ -60,45 +60,54 @@ girtobac ../example/GLib-2.0 \endcode
    \code
 loading ../example/GLib-2.0.gir
 loading GLib-2.0.GirToBac
+generating GLib-2.0.bi ... done \endcode
 
-Translating ... \endcode
-
--# Compare the newly created file <em>Gio-2.0.bi</em> against the original
-   shipped in the archive by executing
+-# Compare the newly created file <em>GLib-2.0.bi</em> against the
+   original one (also shipped in this package) by executing
    \code diff GLib-2.0.bi GLib-2.0.bi.org \endcode
-   This should output only minor differences in the files header, like
+   This should output some differences, like
    \code 
-4c4
+3,4c3,4
+< ' LGPLv2.1 (C) 2013-2015 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
 < ' Auto-translated from file ../example/GLib-2.0.gir
 ---
+> ' LGPLv2.1 (C) 2013-2014 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
 > ' Auto-translated from file /usr/share/gir-1.0/GLib-2.0.gir
-4999,5000d4998
-< DECLARE SUB g_resources_register(BYVAL AS GResource PTR)
-< DECLARE SUB g_resources_unregister(BYVAL AS GResource PTR) \endcode
-   The first difference is a comment in the top region of the file, it
-   has no effect. The second difference are two `DECLARE` lines in the
-   left hand file, which are not present in the original file. Those
-   functions are declared in the *.gir file twice, ie. the first one is
-   declared as a method in the record `GResource` at line 57228 and
-   also as a function at line 82917. By design, \Proj does neither find
-   nor solve such conflicts. It's up to the user to validate the output
-   by compiling with the FreeBASIC compiler and fix the error messages.
+2526d2525
+< DECLARE FUNCTION g_iconv(BYVAL AS GIConv PTR /'GIConv'/, BYVAL AS gchar PTR PTR, BYVAL AS gsize PTR, BYVAL AS gchar PTR PTR, BYVAL AS gsize PTR) AS gsize \endcode
+   The first difference is about comment lines in the top region of the
+   file, they've no effect. The second difference is a `DECLARE` line
+   in the left hand file, which is not present in the original file.
+   The functions `g_iconv` is declared twice in the *.gir file. It's
+   declared as a method in the record `IConv` at line 8328 and also as
+   a function at line 37091. By design, \Proj does neither find nor
+   solve such conflicts. It's up to the user to validate the output by
+   compiling with the FreeBASIC compiler and fix the error messages.
 
--# Now the new header should be ready to use. Test this by creating a
-   new file called *test.bas* and compile this file by executing
+-# In order to validate the header, and since fbc doesn't compile
+   header files directly, we first create a new file called *test.bas*
+   which includes the header and then compile this file by executing
    \code
 echo '#INCLUDE ONCE "GLib-2.0.bi"' > test.bas
 fbc -e -w all test.bas \endcode
+   and we get output like
+   \code
+GLib-2.0.bi(2526) error 4: Duplicated definition in 'DECLARE FUNCTION g_iconv(BYVAL AS GIConv PTR /'GIConv'/, BYVAL AS gchar PTR PTR, BYVAL AS gsize PTR, BYVAL AS gchar PTR PTR, BYVAL AS gsize PTR) AS gsize' \endcode
+   As expected, the compiler finds the duplicated definition. We've to
+   load the file GLib-2.0.bi in to an editor, delete line 2526 and save
+   the file. Now the header should be ready to use (test it by
+   compiling file test.bas again).
    \note The shipped configuration file GLib-2.0.GirToBac was used in
-         the translation process. That's why just a small amount of
-         manual action is necessary. When you start from scratch,
-         you'll see much more error messages from the compiler and
-         you've to create and fill the configuration file line by line
-         to fix it.
+         the translation process (in first step). That's why just a
+         small amount of manual action was necessary. When you start
+         from scratch, you'll see much more error messages from the
+         compiler and you've to create and fill the configuration file
+         line by line to fix them.
 
--# In order to use the \Proj created header[s] in your FB source, copy
-   (or move) the folder \em Gir and its files in to your \em
-   freebasic/include path. Then use \code
+-# In order to use this (or further) \Proj created header[s] in your FB
+   source, copy (or move) the folder \em Gir and its files in to your
+   \em freebasic/include path. Then use
+   \code
 #INCLUDE ONCE "Gir/GLib-2.0.bi" \endcode
    in your code.
 
@@ -152,21 +161,23 @@ Create your header by following these steps:
 # How to fix Problems?  {#ErrorFix}
 
 Here's a brief summary of the most common problems when compiling the
-test code (\em test.bas) and how to fix them. A control file in
-your output folder (<em>.../freebasic/include/Gir</em>) is used to
-add some translation rules. It's named after the inputs base name
-with suffix \em GirToBac (ie. \em Xyz-1.0.GirToBac for a \em
-Xyz-1.0.gir file). The rules are specified in XML syntax (see
-section \ref SecControlFile). Depending on the error messages thrown by
-the fbc when compiling the test file, different entries should be
-done:
+test code and how to fix them. A control file in your output folder
+(<em>.../freebasic/include/Gir</em>) is used to add some translation
+rules. It's named after the inputs base name with suffix \em GirToBac
+(ie. \em Xyz-1.0.GirToBac for a \em Xyz-1.0.gir file). The rules are
+specified in XML syntax (see section \ref SecControlFile). Depending on
+the error messages thrown by the fbc when compiling the test file,
+different entries should be done:
 
 - <B>Duplicated definition ...</B> There's a naming conflict. This
-  usually happens because C syntax is case-sensitve and FBs isn't.
-  Or it happens when an FB keyword is used as a symbol name in C
-  code. Here you should change the FB name to make it unique
-  (usually by adding an underscore character, but also consider to
-  use an ALIAS statement). Example:
+  sometimes when
+  - a function is declared twice in the *.gir file,
+  - fbc interpretes a name non-case-sensitve, or
+  - a FB keyword is used as a C symbol name.
+
+  Either delete the doubled `DECLARE` line or change
+  the FB name to make it unique (usually by adding an underscore
+  character, but also consider to use an ALIAS statement). Example:
   \code <name search='window'  add='_' /> \endcode
 
 - <B>Expected identifier ...</B> There's a conflict between the C
@@ -193,20 +204,20 @@ http://www.freebasic.net/forum in the \em Libraries subforum.
 
 # The control file (*.GirToBac)  {#SecControlFile}
 
-Similar to the <em>*.gir</em> files a control file is XML
-formated and is named by the same base-name with suffix
-<em>*.GirToBac</em>. Each control file contains adaption rules for
-one <em>*.gir</em> file, so each <em>*.gir</em> file
-may have one <em>*.GirToBac</em> file (located in the output
-folder). Ie. when the \Proj tool gets called by
+Similar to the <em>*.gir</em> file, its control file is also XML
+formated and is named by the same base-name and with suffix
+<em>*.GirToBac</em>. Each control file contains adaption rules for one
+<em>*.gir</em> file, \Proj searches for the control file in the current
+folder (where the output gets written). Ie. (see also \ref SecStart)
+when the \Proj tool gets called by
 
-\code ../src/girtobac ../example/Gio-2.0 \endcode
+\code girtobac ../example/GLib-2.0 \endcode
 
-it loads the file <em>Gio-2.0.gir</em> form directory
-<em>../example</em> and file <em>Gio-2.0.GirToBac</em> (if present in
+it loads the file <em>GLib-2.0.gir</em> form directory
+<em>../example</em> and file <em>GLib-2.0.GirToBac</em> (if present in
 the current folder). If the later isn't present, translation gets done
 without any rules. The generated output gets written to the file
-<em>Gio-2.0.bi</em> in the current folder (where \Proj is called
+<em>GLib-2.0.bi</em> in the current folder (where \Proj is called
 from).
 
 Adaption rules may get specified for
@@ -242,18 +253,25 @@ and \em replace:
   dummy source can get switched of.
   Example (cairo):
   \code <check name='CAIRO_H' /> \endcode
-- <b>pack</b> to adapt the library namespace (attribute \em name
-  contains the new name in camel case letters).
-  Example (GLib):
-  \code <pack name='G' /> \endcode
-  or (GooCanvas):
-  \code <pack name='Goo' /> \endcode
+- <b>first</b> to re-order the symbol declaration (\em search contains a single word,
+  no attribute). Declare this symbol before the rest.
+  Example:
+  \code
+  <first search='GtkWidget' />
+  <first search='GtkWidgetClass' />
+  \endcode
 - <b>name</b> to adapt a symbol name (\em search contains a single word,
   further attributes \em add or \em replace).
   Example:
   \code <name search='gtk_stock_add' add='_ ALIAS "gtk_stock_add"' /> \endcode
   or
   \code <name search='GTK_RC_STYLE' replace='_GTK_RC_STYLE' /> \endcode
+- <b>pack</b> to adapt the library namespace (attribute \em name
+  contains the new name in camel case letters).
+  Example (GLib):
+  \code <pack name='G' /> \endcode
+  or (GooCanvas):
+  \code <pack name='Goo' /> \endcode
 - <b>type</b> to adapt types (\em search contains any text, further
   attributes \em add or \em replace).
   Example:
@@ -262,30 +280,26 @@ and \em replace:
   \code
   <type search='void' replace='ANY' />
   <type search='const char* const' replace='CONST gchar PTR CONST' /> \endcode
-- <b>first</b> to prepend the symbol (\em search contains a single word,
-  no attribute) declaration before the rest.
-  Example:
-  \code
-  <first search='GtkWidget' />
-  <first search='GtkWidgetClass' />
-  \endcode
 
 The text in the attribute \em search needs to be specified
 case-sensitive. It may contain more then one word in case of a \em
 type rule, but just one word for \em name and \em first rules.
-\em replace and \em add attributes are used as-is in the output. See
-<em>*.GirToBac</em> files in folder \em Gir for further examples.
+\em replace and \em add attributes are used as-is in the output.
 
-\Proj reports duplicated tags while reading the control file. The
-first tag gets used in that case and all further get skipped. After
-translating the <em>*.gir</em> file, \Proj reports about
-nonexistent symbols (defined in a \em search attribute but not
-existing in the <em>*.gir</em> file). Removing the corresponding
-tags from the control file speads up the translation process.
+\note The folder \em Gir contains the configuration files generated
+      during \Proj development and testing. Check them for further
+      examples.
 
-The control files should be shipped together with the translated
-header files. On one hand side this helps the users to learn about
-the differences between C and FB source. On the other hand side the
+\Proj reports duplicated tags while reading the control file. The first
+tag gets used in that case and all further get skipped (no overrides).
+After translating the <em>*.gir</em> file, \Proj reports about
+nonexistent symbols (defined in a \em search attribute but not existing
+in the <em>*.gir</em> file). You can remove the corresponding tags from
+the control file in order to spead up the translation process.
+
+The control files should be shipped together with the translated header
+files. On one hand side this helps the users to learn about the
+differences between the C and the FB header. On the other hand side the
 control file helps anyone who want to generate an up-date for the
 header, further on.
 

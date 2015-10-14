@@ -46,7 +46,7 @@ Bugfixes:
 - Minor adaptions in the documentation context
 - more user information in output
 
-Released on 2015 October, 11.
+Released on 2015 October, ??  .
 
 
 GirToBac-0.2  {#SubSecV-0-2}
@@ -63,6 +63,7 @@ New:
 Bugfixes:
 
 - Gir attribute "throws" now recognized in all functions.
+- example file changed to GLib-2.0 (since Gio-2.0.bi needs further headers to compile)
 - String literals (instead of `!@"..."` now correct `@!"..."` is used).
 - Minor adaptions in the documentation.
 

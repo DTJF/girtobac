@@ -1,9 +1,10 @@
 /'* \file girtobac_RepData.bas
-\brief Helper Classes list and replacements.
+\brief Auxiliary classes for lists and replacements.
 
-This file contains two helper classes for a list (first in first out
-stack) and for a replacement UDT, that checks and replaces a text.
-It also contains the parser for the configuration file.
+This file contains two auxiliary classes for a list (first in first out
+stack) and for a replacement (checks for a text and return a
+replacement, if any). It also contains the parser for the configuration
+file.
 
 '/
 
@@ -179,6 +180,7 @@ DIM SHARED AS Stack _
 
 '* The \GMP for the configuration file \em *.GirToBac.
 '& SUB_CDECL g2b_parser(){
+'& RepData.add(); find_value();
 G2b_parser:
 _START_PARSER(G2b)
 
@@ -186,25 +188,25 @@ _START_PARSER(G2b)
   CASE "first"
     VAR n = find_value("search", AttNams, AttVals)  ' *< local variable
     IF 0 = n THEN EXIT SELECT
-    FIRST.add(n) '& RepData.add();
-  CASE "type"
+    FIRST.add(n)
+  CASE *FB_TYP.Na
     VAR s = find_value("search", AttNams, AttVals)  ' *< local variable
     IF 0 = s THEN EXIT SELECT
     VAR r = find_value("replace", AttNams, AttVals) ' *< local variable
     VAR a = find_value("add", AttNams, AttVals)     ' *< local variable
-    IF r THEN FB_TYP.add(s, r) : EXIT SELECT '& RepData.add();
+    IF r THEN FB_TYP.add(s, r) : EXIT SELECT
 
     VAR e = *s & *a ' *< local variable
-    FB_TYP.add(s, e) '& RepData.add();
-  CASE "name"
+    FB_TYP.add(s, e)
+  CASE *FB_NAM.Na
     VAR s = find_value("search", AttNams, AttVals)  ' *< local variable
     IF 0 = s THEN EXIT SELECT
     VAR r = find_value("replace", AttNams, AttVals) ' *< local variable
     VAR a = find_value("add", AttNams, AttVals)     ' *< local variable
-    IF r THEN FB_NAM.add(s, r) : EXIT SELECT '& RepData.add();
+    IF r THEN FB_NAM.add(s, r) : EXIT SELECT
 
     VAR e = *s & *a ' *< local variable
-    FB_NAM.add(s, SADD(e)) '& RepData.add();
+    FB_NAM.add(s, SADD(e))
   CASE "binary"
     VAR n = find_value("name", AttNams, AttVals)    ' *< local variable
     IF 0 = n THEN EXIT SELECT
@@ -221,7 +223,7 @@ _START_PARSER(G2b)
 _END_PARSER(G2b)
 
   SELECT CASE *element_name
-  CASE "type", "name", "first", "binary", "check", "pack"
+  CASE *FB_TYP.Na, *FB_NAM.Na, "first", "binary", "check", "pack"
 
 _NEW_PARSER(G2b)
 '& };

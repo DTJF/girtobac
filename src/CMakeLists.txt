@@ -1,10 +1,3 @@
-#
-# GirToBac - Create FB Headers from GObject Introspection *.gir files
-#
-# Copyright (C) 2014-2015, Thomas{ dOt ]Freiherr[ aT ]gmx[ DoT }net
-#
-# All rights reserved.
-#
 # Build / install the executable.
 #
 
