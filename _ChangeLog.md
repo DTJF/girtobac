@@ -38,13 +38,14 @@ New:
 - renamed for GIT (lower case)
 - hosted on GitHub.com
 - CMake build scripts for executable and documentation
-- code listings clean of documentational comments
+- code listings clean of documentational comments (fb-doc-0.4.0)
 - options -h and -v
 
 Bugfixes:
 
 - Minor adaptions in the documentation context
 - more user information in output
+- optimzed caller / callee graphs (fb-doc-0.4.0)
 
 Released on 2015 October, ??  .
 
