@@ -167,6 +167,7 @@ END FUNCTION
 DIM SHARED AS RepData _
   FB_TYP = @"type", _ '*< A RepData class to store replacements for type declarations
   FB_NAM = @"name"    '*< A RepData class to store replacements for symbols (names)
+'&static RepData FB_TYP, FB_NAM;
 DIM SHARED AS Stack _
   FIRST     '*< FiFo stack for ordered elements (pass X))
 

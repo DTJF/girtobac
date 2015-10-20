@@ -6,7 +6,7 @@ Further Development  {#SecToDo}
 ===================
 
 \Proj is already a powerful tool to auto-generate FB header files. But
-there's still some potential optimization, like:
+there's still some optimization potential, like:
 
 - finish OOP support (... when the fbc got it)
 - more automated features like sorting the order or resolving double DECLARES
@@ -21,7 +21,7 @@ or to the
 
 - [forum page](http://www.freebasic.net/forum/viewtopic.php?p=190158)
 
-or feel free to send your ideas directly to the author (\Email).
+or feel free to send your ideas directly to the author (\Mail).
 
 
 Versions  {#SecVersions}

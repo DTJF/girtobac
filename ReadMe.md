@@ -31,7 +31,7 @@ generator](http://www.doxygen.org/) from FB source code by
 filtering.)
 
 
-Licence
+License
 =======
 
 GPLv3: Copyright (C) 2013-2015, Thomas{ doT ]Freiherr[ At ]gmx[ DoT }net

@@ -60,7 +60,7 @@ TYPE Context
   , FunDll _    '*< The function name in the dll
   , FieldNam _  '*< The FB name of a field
   , FieldVal _  '*< The vale of a field
-  , OopDll _    '*< The FB variable for OOP ???
+  , OopDll _    '*< The FB symbol for OOP ???
   , Check _     '*< The symbol to check for (skip binding if prersent)
   , NamSpace _  '*< The namespace of the library
   , NamDll _    '*< The name of the library to include
@@ -331,7 +331,7 @@ _END_PARSER(para)
 _NEW_PARSER(para)
 '& };
 
-'* The \GMP for the functions (function, method, constructor, callback)
+'* The \GMP for functions (tags function, method, constructor, callback)
 '& SUB_CDECL func_parser(){
 '& type_parser(); para_parser(); fb_type(); skip_parser();
 Func_parser:
@@ -721,9 +721,9 @@ _END_PARSER(pass1)
     PRINT #.FnrBi, NL "END ENUM";
     g_markup_parse_context_pop(ctx)
   CASE "alias"
-  IF LEN(.FieldNam) _
-    THEN PRINT #.FnrBi, NL "TYPE AS " & fb_type(UserData) & " " & .FieldNam; _
-    ELSE PRINT #.FnrBi, NL "TYPE AS ANY " & fb_type(UserData); 
+    IF LEN(.FieldNam) _
+      THEN PRINT #.FnrBi, NL "TYPE AS " & fb_type(UserData) & " " & .FieldNam; _
+      ELSE PRINT #.FnrBi, NL "TYPE AS ANY " & fb_type(UserData); 
     g_markup_parse_context_pop(ctx)
   CASE "class", "record", "interface"
   CASE "include", "repository", "namespace"
@@ -734,7 +734,7 @@ _NEW_PARSER(pass1)
 
 '* The \GMP for the second pass
 '& SUB_CDECL passX_parser(){
-'& skip_parser(); class_parser(); Udt_parser(); unio_parser(); RepData::rep(find_value()); func_parser(); FB_NAM.rep();
+'& skip_parser(); class_parser(); udt_parser(); unio_parser(); RepData::rep(find_value()); func_parser(); FB_NAM.rep();
 PassX_parser:
 _START_PARSER(passX)
   SELECT CASE *element_name
@@ -894,10 +894,9 @@ This macro creates a parser context and runs the given parser once.
 '& int main(){
 '& g2b_parser(); pass1_parser(); passX_parser(); pass4_parser(); RepData.list(); FB_NAM.list(); FB_TYP.list(proto;)
 
-IF COMMAND(1) = "-v" orelse COMMAND(1) = "--version" then ?V_TEXT : END
-'IF __FB_ARGC__ <= 1 THEN ?"Pass in filename as parameter!" : END
-IF __FB_ARGC__ <> 2 orelse _
-   COMMAND(1) = "-h" orelse COMMAND(1) = "--help"    then ?H_TEXT : END
+IF COMMAND(1) = "-v" ORELSE COMMAND(1) = "--version" THEN ?V_TEXT : END
+IF __FB_ARGC__ <> 2  ORELSE _
+   COMMAND(1) = "-h" ORELSE COMMAND(1) = "--help"    THEN ?H_TEXT : END
 
 VAR filename = COMMAND(1) _  ' *< input file name
   , basename = MID(filename, INSTRREV(filename, ANY "\/") + 1) ' *< name without path
@@ -945,9 +944,9 @@ WITH UDat
     IF LEN(.Check) THEN PRINT #.FnrBi, "#IFNDEF " & .Check
     PRINT #.FnrBi, "#INCLUDE ONCE ""_GirToBac-0.0.bi"""
 
-    PARSE(1) '//                   #DEFINE, ENUM, TYPE
+    PARSE(1) '//                                     #DEFINE, ENUM, TYPE
 
-    IF OOP ORELSE 0 = LEN(.NamDll) THEN
+    IF OOP ORELSE 0 = LEN(.NamDll) THEN  
       PRINT #.FnrBi, NL "EXTERN ""C""";
     ELSE
       PRINT #.FnrBi, NL "EXTERN ""C"" LIB """ & .NamDll & """";
@@ -967,7 +966,7 @@ WITH UDat
     PRINT #.FnrBi, NL "' P_3" '       UNIONs, CALLBACKs and TYPEs (rest)
     PARSE(X)
 
-    PRINT #.FnrBi, NL "' P_4" '                       SUBs and FUNCTIONs
+    PRINT #.FnrBi, NL "' P_4" '          SUBs and FUNCTIONs (END EXTERN)
     PARSE(4)
 
     PRINT #.FnrBi,

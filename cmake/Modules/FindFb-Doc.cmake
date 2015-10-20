@@ -1,26 +1,16 @@
-# - This module looks for fb-doc tool to generate documentation by the
-#   Doxygen generator.  Please see
-# http://github.com/DTJF/fb-doc
+# This script looks for fb-doc tool (http://github.com/DTJF/fb-doc) to
+# generate documentation by the Doxygen generator
 #
-# This modules defines the following variables:
+# It defines the following variables:
 #
 #   FbDoc_EXECUTABLE     = The path to the fb-doc command.
 #   FbDoc_WORKS          = Was fb-doc found or not?
 #   FbDoc_VERSION        = The version reported by fb-doc --version
 #
-
-#=============================================================================
 # Copyright (C) 2014-2015, Thomas{ dOt ]Freiherr[ aT ]gmx[ DoT }net
+# License GPLv3 (see http://www.gnu.org/licenses/gpl-3.0.html)
 #
-# Distributed under the OSI-approved BSD License (the "License");
-# see accompanying file Copyright.txt for details.
-#
-# This software is distributed WITHOUT ANY WARRANTY; without even the
-# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the License for more information.
-#=============================================================================
-# (To distribute this file outside of CMake, substitute the full
-#  License text for the above reference.)
+# See ReadMe.md for details.
 
 IF(NOT FbDoc_WORKS)
   SET(fbdoc "fb-doc")

@@ -66,23 +66,26 @@ generating GLib-2.0.bi ... done \endcode
    original one (also shipped in this package) by executing
    \code diff GLib-2.0.bi GLib-2.0.bi.org \endcode
    This should output some differences, like
-   \code 
-3,4c3,4
+   \code
+2,4c2,4
+< '                       ### GirToBac ###
 < ' LGPLv2.1 (C) 2013-2015 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
 < ' Auto-translated from file ../example/GLib-2.0.gir
 ---
+> '                       ### girtobac ###
 > ' LGPLv2.1 (C) 2013-2014 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
 > ' Auto-translated from file /usr/share/gir-1.0/GLib-2.0.gir
 2526d2525
 < DECLARE FUNCTION g_iconv(BYVAL AS GIConv PTR /'GIConv'/, BYVAL AS gchar PTR PTR, BYVAL AS gsize PTR, BYVAL AS gchar PTR PTR, BYVAL AS gsize PTR) AS gsize \endcode
-   The first difference is about comment lines in the top region of the
-   file, they've no effect. The second difference is a `DECLARE` line
-   in the left hand file, which is not present in the original file.
-   The functions `g_iconv` is declared twice in the *.gir file. It's
-   declared as a method in the record `IConv` at line 8328 and also as
-   a function at line 37091. By design, \Proj does neither find nor
-   solve such conflicts. It's up to the user to validate the output by
-   compiling with the FreeBASIC compiler and fix the error messages.
+   The first difference (three lines) is about comment lines in the top
+   region of the file, they've no effect. The second difference is a
+   `DECLARE` line in the left hand file, which is not present in the
+   original file. The functions `g_iconv` is declared twice in the
+   *.gir file. It's declared as a method in the record `IConv` at line
+   8328 and also as a function at line 37091. By design, \Proj does
+   neither find nor solve such conflicts. It's up to the user to
+   validate the output by compiling with the FreeBASIC compiler and fix
+   the error messages.
 
 -# In order to validate the header, and since fbc doesn't compile
    header files directly, we first create a new file called *test.bas*

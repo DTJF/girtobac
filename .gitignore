@@ -7,6 +7,7 @@ cmake_install.cmake
 install_manifest.txt
 
 girtobac
+girtobac_text.bi
 girtobac.geany
 
 
