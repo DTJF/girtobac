@@ -292,6 +292,23 @@ and `replace`:
 <check name='CAIRO_H' />
 ~~~
 
+- <b>code</b> to prepend the header by user defined text (source code).
+  The code is prepended before the dependency headers get included, but
+  after the header `_GirToBac-0.0.bi`. Ie. this can include further
+  headers or provide additional declarations. Example
+  (`Soup-2.4.GirToBac`):
+  ~~~{.xml}
+<code>
+#IFNDEF sockaddr
+ TYPE sa_family_t AS USHORT ' from bits/sockaddr.bi
+ TYPE sockaddr
+  sa_family AS sa_family_t
+  sa_data(0 TO 14-1) AS UBYTE
+ END TYPE
+#ENDIF
+</code>
+~~~
+
 - <b>first</b> to re-order the symbol declaration (`search` contains a
   single word, no attribute). Declare this symbol before the rest.
   Example:

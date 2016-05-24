@@ -213,11 +213,28 @@ _START_PARSER(G2b)
     VAR n = find_value("name", AttNams, AttVals)    ' *< local variable
     IF 0 = n THEN EXIT SELECT
     .NamSpace = *n
+  CASE "code" ' collect when tag is closing
 
 _END_PARSER(G2b)
 
   SELECT CASE *element_name
-  CASE *FB_TYP.Na, *FB_NAM.Na, "first", "binary", "check", "pack"
+  CASE *FB_TYP.Na, *FB_NAM.Na, "first", "binary", "check", "pack", "code"
 
-_NEW_PARSER(G2b)
+  CASE ELSE
+    g_markup_parse_context_pop(ctx)
+  END SELECT
+  END WITH
+ END SUB
+
+ SUB text_G2b CDECL( _
+  BYVAL Ctx AS GMarkupParseContext PTR, _
+  BYVAL Text AS CONST gchar PTR, _
+  BYVAL Size AS gsize, _
+  BYVAL UserData AS gpointer, _
+  BYVAL Error_ AS GError PTR PTR)
+
+  PEEK(Context, UserData).UserCode &= left(*Text, Size)
+ END SUB
+
+ STATIC SHARED AS GMarkupParser G2b_parser = TYPE(@start_G2b, @end_G2b, @text_G2b, NULL, NULL)
 '& };

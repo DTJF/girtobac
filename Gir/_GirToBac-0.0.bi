@@ -18,7 +18,7 @@ TYPE AS  LONGINT gint64, glong
 TYPE AS ULONGINT guint64, gulong
 TYPE AS   SINGLE gfloat
 TYPE AS   DOUBLE gdouble
-TYPE AS  INTEGER gssize, ssize_t
+TYPE AS  INTEGER gssize, ssize_t, goffset
 TYPE AS UINTEGER gsize, size_t
 
 TYPE AS   ZSTRING PTR utf8, filename, gunichar

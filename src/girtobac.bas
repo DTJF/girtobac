@@ -62,6 +62,7 @@ TYPE Context
   , OopDll _    '*< The FB symbol for OOP ???
   , Check _     '*< The symbol to check for (skip binding if prersent)
   , NamSpace _  '*< The namespace of the library
+  , UserCode _  '*< The user code to prepend the header
   , NamDll _    '*< The name of the library to include
   , NextElm _   '*< The name of the next element in the ordered list
   , ArrayTyp _  '*< The type of an array
@@ -926,7 +927,7 @@ WITH UDat
   IF OPEN(ofile FOR OUTPUT AS .FnrBi) THEN
     ?NL "Cannot open file for output!";
   ELSE
-    PRINT #.FnrBi, MSG_HEADERS & filename
+    PRINT #.FnrBi, MSG_HEADERS & filename;
 
     DIM AS gchar PTR buff2 ' *< buffer for control file
     DIM AS gsize length2   ' *< length of control file
@@ -940,8 +941,9 @@ WITH UDat
       g_free(buff2)
     END IF
     ?NL "generating " & ofile & " ... ";
-    IF LEN(.Check) THEN PRINT #.FnrBi, "#IFNDEF " & .Check
-    PRINT #.FnrBi, "#INCLUDE ONCE ""_GirToBac-0.0.bi"""
+    IF LEN(.Check) THEN PRINT #.FnrBi, NL "#IFNDEF " & .Check;
+    PRINT #.FnrBi, NL "#INCLUDE ONCE ""_GirToBac-0.0.bi""";
+    IF LEN(.UserCode) THEN PRINT #.FnrBi, NL .UserCode;
 
     PARSE(1) '//                                     #DEFINE, ENUM, TYPE
 
