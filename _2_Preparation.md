@@ -29,6 +29,7 @@ their distrubution management system (D).
 | [fb-doc](http://github.com/DTJF/fb-doc)      | R    | FreeBASIC extension tool for Doxygen                           |
 | [Doxygen](http://www.doxygen.org/)           | R  D | documentation generator (ie. for this text)                    |
 | [Graphviz](http://www.graphviz.org/)         | R  D | Graph Visualization Software (caller/callee graphs)            |
+| [LaTeX](https://latex-project.org/ftp.html)  | R  D | A document preparation system (for PDF output)                 |
 
 It's beyond the scope of this guide to describe the installation for
 those programming tools. Find detailed installation instructions on the
@@ -157,8 +158,8 @@ PDF file (either in-source or out-of-source):
 make doc
 ~~~
 
-\note Find the HTML start file at *doc/html/index.html*.
-\note Find the PDF file at *doc/girtobac.pdf*.
+\note Find the HTML start file at `doxy/html/index.html`.
+\note Find the PDF file at `doxy/girtobac.pdf`.
 
 Both targets can get build separately by executing
 

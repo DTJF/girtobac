@@ -15,10 +15,12 @@ BAS_SRC
   ../src/girtobac_RepData.bas
 DEPENDS
   ../ReadMe.md
-  ../_Introduction.md
-  ../_Preparation.md
-  ../_Tutorial.md
-  ../_ChangeLog.md
+  ../_1_Introduction.md
+  ../_2_Preparation.md
+  ../_3_Tutorial.md
+  ../_9_ChangeLog.md
   ../CMakeLists.txt
+  Doxyfile
+  girtobac.css
   girtobac.xml
   )

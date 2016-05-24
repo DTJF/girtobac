@@ -21,16 +21,14 @@ SET(PROJ_AUTH "DTJF"               CACHE STRING "project authors" FORCE)
 SET(PROJ_MAIL "Thomas{ doT ]Freiherr[ At ]gmx[ DoT }net"  CACHE STRING "project mail address" FORCE)
 SET(PROJ_WEBS "https://github.com/DTJF/girtobac" CACHE STRING "project website" FORCE)
 SET(PROJ_LICE "GPLv3"              CACHE STRING "project licence" FORCE)
-SET(PROJ_YEAR "2015"               CACHE STRING "project year" FORCE)
+SET(PROJ_YEAR "2016"               CACHE STRING "project year" FORCE)
 
 # declare the project name and the language (compiler) to use
 PROJECT(${PROJ_NAME} Fbc)
 
 ADD_SUBDIRECTORY(src)
 
-ADD_SUBDIRECTORY(doc)
-
-PROJECT(${PROJ_NAME} Fbc)
+ADD_SUBDIRECTORY(doxy)
 
 CONFIGURE_FILE(_ReadMe.md.in ${CMAKE_SOURCE_DIR}/ReadMe.md @ONLY)
 

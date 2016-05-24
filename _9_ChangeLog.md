@@ -2,8 +2,8 @@ Changelog & Credits {#PagChangelog}
 ===================
 \tableofcontents
 
-Further Development  {#SecToDo}
-===================
+
+# Further Development  {#SecToDo}
 
 \Proj is already a powerful tool to auto-generate FB header files. But
 there's still some optimization potential, like:
@@ -24,13 +24,11 @@ or to the
 or feel free to send your ideas directly to the author (\Mail).
 
 
-Versions  {#SecVersions}
-========
+# Versions  {#SecVersions}
 
 Here's a list of the published versions:
 
-girtobac-0.4  {#SubSecV-0-4}
-------------
+## girtobac-0.4  {#SubSecV-0-4}
 
 New:
 
@@ -50,15 +48,14 @@ Bugfixes:
 Released on 2015 October, ??  .
 
 
-GirToBac-0.2  {#SubSecV-0-2}
-------------
+## GirToBac-0.2  {#SubSecV-0-2}
 
 New:
 
 - GirToBac source 32/64 bit ready.
 - Translated header code 32/64 bit ready.
 - Self translated GLib header in use.
-- Configuraton file attributes \em binary, \em check and \em pack.
+- Configuraton file attributes `binary`, `check` and `pack`.
 - Caller / callee graphs in the documentation.
 
 Bugfixes:
@@ -71,14 +68,12 @@ Bugfixes:
 Released on 2014 September, 23.
 
 
-GirToBac-0.0  {#SubSecV-0-0}
-------------
+## GirToBac-0.0  {#SubSecV-0-0}
 
 Initial release on 2013 August, 11.
 
 
-Credits  {#SecCredits}
-=======
+# Credits  {#SecCredits}
 
 Thanks go to:
 

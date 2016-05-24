@@ -2,18 +2,17 @@
 \brief Main source code file
 
 This file contains the main source code. Compile this file with the
-FreeBasic compiler \em fbc to create an executable \Proj tool.
+FreeBasic compiler `fbc` to create an executable \Proj tool.
 
-The main content of this file are different parsers used by the <A
-HREF="https://developer.gnome.org/glib/stable/glib-Simple-XML-Subset-Parser.html">
-GMarkupParser </A>. Each parser is declared as a UDT containing five
-function adresses. Only two are used here (\em start_element and \em
-end_element). For better readability macros are used for the
-relapsing part of the function declarations and the UDT
-declarations of each parser. Additionally, labels are placed in
-front of each parser to get a mark in the IDE labels list for easy
-jumping between the parser definitions. (The labels aren't used in
-the source code.)
+The main content of this file are different parsers used by the
+[GMarkupParser](https://developer.gnome.org/glib/stable/glib-Simple-XML-Subset-Parser.html).
+Each parser is declared as a UDT containing five function adresses.
+Only two are used here (*start_element* and *end_element*). For better
+readability macros are used for the relapsing part of the function
+declarations and the UDT declarations of each parser. Additionally,
+labels are placed in front of each parser to get a mark in the IDE
+labels list for easy jumping between the parser definitions. (The
+labels aren't used in the source code.)
 
 '/
 
@@ -234,12 +233,12 @@ several times, so this macro makes it unique (single source).
 \returns An FB type string
 
 Type declarations may need adaptions. We have to follow the rules
-defined in the *.GirToBac file to change some types. Also they may
+defined in the `*.GirToBac` file to change some types. Also they may
 contain '*' characters to be translated to 'PTR' strings for FB.
 
-In seldom cases a <em>*.gir</em> declaration doesn't contain an
-entry for a C type. Then we try repairing it by using the type used
-in the namespace instead.
+In seldom cases a `*.gir` declaration doesn't contain an entry for a C
+type. Then we try repairing it by using the type used in the namespace
+instead.
 
 '/
 FUNCTION fb_type(BYVAL Ud AS ANY PTR) AS STRING

@@ -14,12 +14,12 @@ GooCanvas, ...).
 
 The package is [hosted at GitHub](@PROJ_WEBS@) and it contains
 
-- the *@PROJ_NAME@* source code in folder *src*
-- the header GLib-2.0.bi in folder *Gir*
-- an example input file GLib-2.0.gir in folder *example*
-- several configuration files (*.GirToBac) in folder *Gir*
-- the configuration files to build the documentation in folder *doc*
-- the documentation context in .md files in *root* folder
+- the *@PROJ_NAME@* source code in folder `src`
+- the header `GLib-2.0.bi` in folder `Gir`
+- an example input file `GLib-2.0.gir` in folder `example`
+- several configuration files (`*.GirToBac`) in folder `Gir`
+- the configuration files to build the documentation in folder `doc`
+- the documentation context in `.md` files in `root` folder
 - CMake scripts to build the targets all, doc, doc_htm, doc_pdf
 
 Find the online documentation at

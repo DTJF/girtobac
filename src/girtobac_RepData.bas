@@ -172,7 +172,7 @@ DIM SHARED AS Stack _
   FIRST     '*< FiFo stack for ordered elements (pass X))
 
 
-'* The \GMP for the configuration file \em *.GirToBac.
+'* The \GMP for the configuration file `*.GirToBac`.
 '& SUB_CDECL g2b_parser(){
 '& RepData.add(); find_value();
 G2b_parser:
