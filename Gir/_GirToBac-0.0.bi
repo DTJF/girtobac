@@ -1,18 +1,14 @@
 '       FreeBasic header file, manual-generated file
 '              containing types for GLib-2.0
-' LGPLv2.1 (C) 2014 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
+' LGPLv2.1 (C) 2014-2016 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
 
-TYPE AS  ZSTRING gchar
-TYPE AS     BYTE gint8, char
+TYPE AS  ZSTRING gchar, char
+TYPE AS     BYTE gint8
 TYPE AS    UBYTE guint8, guchar
 TYPE AS    SHORT gint16, gshort, gunichar2
 TYPE AS   USHORT guint16, gushort
-'TYPE AS     LONG gint, gint32
-'TYPE AS    ULONG guint, guint32, gboolean ', GType
-TYPE AS     LONG gint32
-TYPE AS    ULONG guint32, gboolean ', GType
-TYPE AS     LONG gint
-TYPE AS    ULONG guint
+TYPE AS     LONG gint, gint32, gunichar
+TYPE AS    ULONG guint, guint32, gboolean ', GType
 
 TYPE AS  LONGINT gint64, glong
 TYPE AS ULONGINT guint64, gulong
@@ -21,16 +17,10 @@ TYPE AS   DOUBLE gdouble
 TYPE AS  INTEGER gssize, ssize_t, goffset
 TYPE AS UINTEGER gsize, size_t
 
-TYPE AS   ZSTRING PTR utf8, filename, gunichar
+TYPE AS   ZSTRING PTR utf8, filename
 TYPE AS       ANY PTR gpointer, va_list
 TYPE AS CONST ANY PTR gconstpointer
 
-#IFNDEF time_t
-TYPE AS LONG time_t
-#ENDIF
-#IFNDEF FILE
-TYPE AS LONG FILE
-#ENDIF
 #IFNDEF NULL
 #DEFINE NULL CAST(ANY PTR, 0)
 #ENDIF

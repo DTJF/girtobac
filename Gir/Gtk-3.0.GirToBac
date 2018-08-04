@@ -1,19 +1,23 @@
 <?xml version="1.0"?>
 
-<name search="rgba" add="_ /'rgba'/"/>
 <name search="gtk_stock_add" add='_ ALIAS "gtk_stock_add" '/>
 
 <type search="GdkAtom" replace="any ptr /'GdkAtom'/"/>
 <type search="int" replace="gint /'int'/"/>
-<type search="unsigned" replace="guint32 /'unsigned'/"/>
+<type search="unsigned" replace="guint /'unsigned'/"/>
 <type search="Window" replace="guint32 /'Window'/"/>
 <type search="void" replace="any /'void'/"/>
+<type search="gunichar /'?'/" replace="gunichar"/>
 
 <first search="GtkRcPropertyParser"/>
 <first search="GtkTickCallback"/>
 <first search="GtkBuilderConnectFunc"/>
+<first search="GtkAccessible"/>
+<first search="GtkAccessibleClass"/>
 <first search="GtkWidget"/>
 <first search="GtkWidgetClass"/>
+<first search="GtkWidgetAccessible"/>
+<first search="GtkWidgetAccessibleClass"/>
 <first search="GtkCallback"/>
 <first search="GtkContainer"/>
 <first search="GtkContainerClass"/>
@@ -107,7 +111,27 @@
 <first search="GtkTreeViewSearchPositionFunc"/>
 <first search="GtkTreeViewMappingFunc"/>
 <first search="GtkTreeViewColumnDropFunc"/>
-<first search="GtkRcPropertyParser"/>
 <first search="GtkListBoxFilterFunc"/>
 <first search="GtkListBoxUpdateHeaderFunc"/>
 <first search="GtkListBoxSortFunc"/>
+<first search="GtkCellAccessible"/>
+<first search="GtkCellAccessibleClass"/>
+<first search="GtkRendererCellAccessible"/>
+<first search="GtkRendererCellAccessibleClass"/>
+<first search="GtkContainerAccessible"/>
+<first search="GtkContainerAccessibleClass"/>
+<first search="GtkMenuItemAccessible"/>
+<first search="GtkMenuItemAccessibleClass"/>
+<first search="GtkFlowBoxCreateWidgetFunc"/>
+<first search="GtkFlowBoxForeachFunc"/>
+<first search="GtkFlowBoxFilterFunc"/>
+<first search="GtkFlowBoxSortFunc"/>
+<first search="GtkListBoxCreateWidgetFunc"/>
+<first search="GtkListBoxForeachFunc"/>
+<first search="GtkButtonAccessible"/>
+<first search="GtkButtonAccessibleClass"/>
+<first search="GtkMenuShellAccessible"/>
+<first search="GtkMenuShellAccessibleClass"/>
+<first search="GtkToggleButtonAccessible"/>
+<first search="GtkToggleButtonAccessibleClass"/>
+<first search="GtkNativeDialogClass"/>

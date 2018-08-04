@@ -1,3 +1,9 @@
 <?xml version="1.0"?>
 
-<type search="const gchar* const" replace="const gchar PTR const /'const gchar* const'/"/>
+<code>
+#INCLUDE ONCE "crt/time.bi"
+</code>
+
+<first search="GtkSourceMountOperationFactory"/>
+<first search="GtkSourceView"/>
+<first search="GtkSourceViewClass"/>

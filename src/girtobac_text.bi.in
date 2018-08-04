@@ -11,8 +11,8 @@ namely the version and help texts.
  #DEFINE NL !"\n" &
  '* The target operation system
  #DEFINE TARG "UNIX"
-#ELSE
 '&/* Doxygen shouldn't see this
+#ELSE
  #DEFINE NL !"\r\n" &
  #DEFINE TARG "DOS/windows"
 '&*/
@@ -34,10 +34,10 @@ namely the version and help texts.
 #DEFINE MSG_COMPILE _
   "  Compiled: " & __DATE__ & ", " & __TIME__ & " with " & __FB_SIGNATURE__ & " for " & TARG
 
-'* The text for option -v
+'* The text for option -v (version)
 #DEFINE V_TEXT _
   MSG_WELCOME & NL MSG_COMPILE
 
-'* \brief The text for option -h 
+'* \brief The text for option -h (help)
 #DEFINE H_TEXT _
   MSG_WELCOME & NL NL "Pass in filename as (solely) parameter!"

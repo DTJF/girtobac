@@ -2,9 +2,9 @@
 
 <type search="xmlNodePtr" replace="any ptr /' xmlNodePtr '/"/>
 <type search="const xmlNodePtr" replace="const any ptr /' const xmlNodePtr '/"/>
-<type search="GObject.Value" replace="GValue /' GObject.Value '/"/>
 <type search="void" replace="any /' void '/"/>
 <type search="int" replace="gint /' int '/"/>
+<type search="gchar /'?'/" replace="gint8" />
 
 <first search="GdaAttributesManagerFunc"/>
 <first search="GdaAttributesManagerSignal"/>

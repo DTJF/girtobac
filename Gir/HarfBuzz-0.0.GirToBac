@@ -2,20 +2,24 @@
 
 <name search='hb_version_string' add='_ ALIAS "hb_version_string"'/>
 
+<type search="const int" replace="const gint /'const int'/"/>
+<type search="int" replace="gint /'int'/"/>
 <type search="void" replace="any /'void'/"/>
 <type search="unsigned" replace="guint /'unsigned'/"/>
 <type search="unsigned int" replace="guint /'unsigned int'/"/>
-<type search="int" replace="gint /'int'/"/>
 <type search="int8_t" replace="gint8 /'int8_t'/"/>
 <type search="uint8_t" replace="guint8 /'uint8_t'/"/>
 <type search="int16_t" replace="gint16 /'int16_t'/"/>
 <type search="uint16_t" replace="guint16 /'uint16_t'/"/>
 <type search="int32_t" replace="gint32 /'int32_t'/"/>
 <type search="uint32_t" replace="guint32 /'uint32_t'/"/>
+<type search="float" replace="gfloat /'float'/"/>
+<type search="const float" replace="const gfloat /'const float'/"/>
 <type search="hb_language_t" replace="hb_language_t ptr /'hb_language_t'/"/>
 <type search="FT_Face" replace="any ptr /'FT_Face'/"/>
 <type search="gr_face" replace="any ptr /'gr_face'/"/>
 <type search="gr_font" replace="any ptr /'gr_font'/"/>
 <type search="const char" replace="const gchar /'const char'/"/>
+<type search="const char* const" replace="const gchar const /'const char* const'/"/>
 
 <first search="hb_var_int_t"/>

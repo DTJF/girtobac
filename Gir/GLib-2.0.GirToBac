@@ -2,11 +2,19 @@
 
 <pack name="G"/>
 
+<code>
+#include once "crt/stdio.bi"
+#include once "crt/time.bi"
+</code>
+
 <name search="G_CSET_a_2_z" add="_ /'G_CSET_a_2_z'/"/>
 <name search="g_source_remove" add='_ ALIAS "g_source_remove"'/>
 
+<type search="const gchar* const" replace="const gchar PTR const /'const gchar* const'/"/>
+<type search="const int" replace="const gint32 /'const int'/"/>
 <type search="int" replace="gint /'int'/"/>
-<type search="const int" replace="const gint32 /'int'/"/>
+<type search="gchar /'?'/" replace="gint8 /'gchar'/"/>
+<type search="char /'?'/" replace="gint8 /'char'/"/>
 <type search="void" replace="any /'void'/"/>
 <type search="tm" replace="any /'tm'/"/>
 <type search="goffset" replace="gint32 /'goffset'/"/>

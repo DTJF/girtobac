@@ -73,7 +73,7 @@ TYPE Context
     ParaBy _    '*< The parameter passing (BYVAL/BYREF)
   , ParaCnt _   '*< The number of parameters in a list
   , BlockCnt _  '*< The number of entries in a block (ENUM/UNION/TYPE)
-  , type_flg _  '*< The tye of a variable (see #TypeFlags)
+  , Type_flg _  '*< The tye of a variable (see #TypeFlags)
   , ArrayLen _  '*< The length or size of an array
   , FieldBits _ '*< The number of bits (in a bitfield)
   , PropRW _    '*< The PROPERTY style (read/write)
@@ -193,14 +193,37 @@ STATIC SHARED AS GMarkupParser skip_parser = TYPE(NULL, NULL, NULL, NULL, NULL)
 
 #INCLUDE ONCE "girtobac_RepData.bas"
 
+START_TYPE:
+/'* \brief Generate code to start parsing a type tag
+
+This macro is used to start the type parser. The snipped is used
+several times, so this macro makes it unique (single source).
+
+'/
+#MACRO _START_TYPE()
+  .Type_flg = 0
+  g_markup_parse_context_push(ctx, @type_parser, UserData)
+#ENDMACRO
+
+/'* \brief Generate code to end parsing a type tag
+
+This macro is used to end the type parser. The snipped is used
+several times, so this macro makes it unique (single source).
+
+'/
+#MACRO _END_TYPE()
+  g_markup_parse_context_pop(ctx)
+#ENDMACRO
+
+
 START_FUNC:
-/'* \brief Generate code to start parsing a function
+/'* \brief Generate code to start parsing a function tag
 
 This macro is used to start the function parser. The snipped is used
 several times, so this macro makes it unique (single source).
 
 '/
-#MACRO _START_FUNC()
+#MACRO _START_FUNC() 
   .ParaCnt = 0 : .ParaStr = "(" : .FunTyp = ""
   .GErrr = find_value("throws", AttNams, AttVals)
   IF OOP THEN
@@ -212,7 +235,7 @@ several times, so this macro makes it unique (single source).
   g_markup_parse_context_push(ctx, @func_parser, UserData)
 #ENDMACRO
 
-/'* \brief Generate code to end parsing a function
+/'* \brief Generate code to end parsing a function tag
 
 This macro is used to end the function parser. The snipped is used
 several times, so this macro makes it unique (single source).
@@ -224,7 +247,7 @@ several times, so this macro makes it unique (single source).
     .ParaStr &= "BYVAL AS GError PTR PTR" : .ParaCnt += 1
   END IF
   g_markup_parse_context_pop(ctx)
-  .type_flg = IIF(LEN(.FunTyp), TYPE_FUN, TYPE_SUB)
+  .Type_flg = IIF(LEN(.FunTyp), TYPE_FUN, TYPE_SUB)
   .ParaStr &= ")"
 #ENDMACRO
 
@@ -246,14 +269,14 @@ FUNCTION fb_type(BYVAL Ud AS ANY PTR) AS STRING
   WITH PEEK(Context, Ud) '& Context Ud;
     IF 0 = LEN(.TypC) THEN '               try to fix it (may be faulty)
       SELECT CASE .Typ
-      CASE "utf8", "filename" : RETURN "/'!'/gchar PTR"
+      CASE "utf8", "filename" : RETURN "/'!'/ gchar PTR"
       CASE ELSE
         IF 0 = LEN(.Typ) THEN RETURN "/'!'/ any PTR"
         .TypC = .Typ
       END SELECT
     ELSE
-      IF LEFT(.Typc, 9) = "volatile " THEN .TypC = MID(.TypC, 10)
-      IF .Typc = "gchar" THEN .TypC = "gint8"
+      IF LEFT(.TypC, 9) = "volatile " THEN .TypC = MID(.TypC, 10)
+      IF RIGHT(.TypC, 4) = "char" THEN .TypC &= " /'?'/"
     END IF
 
     VAR ptrs = 0, i = LEN(.TypC) - 1
@@ -287,7 +310,7 @@ DECLARE SUB end_TYPE CDECL( _
   BYVAL AS GError PTR PTR)
 '&*/
 
-'* The \GMP for the type XML-tags
+'* The \GMP for the type tags (necessary for circular references)
 STATIC SHARED AS GMarkupParser _
   type_parser = TYPE(@start_TYPE, @end_TYPE, NULL, NULL, NULL)
 
@@ -304,18 +327,18 @@ _START_PARSER(para)
       'var d = find_value("direction", AttNams, AttVals)
       '.ParaBy = iif(*d <> "in", 1, 0)
     'end if
-    g_markup_parse_context_push(ctx, @type_parser, UserData) 
+    _START_TYPE()
 
 _END_PARSER(para)
 
   SELECT CASE *element_name
   CASE "parameter", "instance-parameter"
-    g_markup_parse_context_pop(ctx)
+    _END_TYPE()
     IF .ParaCnt THEN .ParaStr &= ", "
-    IF .type_flg = TYPE_VARARG THEN
+    IF .Type_flg = TYPE_VARARG THEN
       .ParaStr &= "..."
     ELSE
-      IF .type_flg = TYPE_ARRAY ANDALSO LEN(.ArrayTyp) THEN .TypC = .ArrayTyp
+      IF .Type_flg = TYPE_ARRAY ANDALSO LEN(.ArrayTyp) THEN .TypC = .ArrayTyp
       IF OOP THEN
         'if .ParaBy _
           'then .ParaStr &= "BYREF" : .ParaBy = 0 _
@@ -325,7 +348,7 @@ _END_PARSER(para)
       ELSE
         .ParaStr &= "BYVAL AS " & fb_type(UserData) 
       END IF
-    END IF : .type_flg = 0
+    END IF : .Type_flg = 0
     .ParaCnt += 1
 
 _NEW_PARSER(para)
@@ -339,7 +362,7 @@ _START_PARSER(func)
 
   SELECT CASE *element_name
   CASE "return-value"
-    g_markup_parse_context_push(ctx, @type_parser, UserData) 
+    _START_TYPE()
   CASE "parameters"
     g_markup_parse_context_push(ctx, @para_parser, UserData) 
 
@@ -347,9 +370,9 @@ _END_PARSER(func)
 
   SELECT CASE *element_name
   CASE "return-value"
-    IF .type_flg = TYPE_ARRAY ANDALSO LEN(.ArrayTyp) THEN .TypC = .ArrayTyp
-    IF .Typ <> "none" THEN .FunTyp = fb_type(UserData) 
-    g_markup_parse_context_pop(ctx)
+    IF .Type_flg = TYPE_ARRAY ANDALSO LEN(.ArrayTyp) THEN .TypC = .ArrayTyp
+    IF .Typ <> "none" THEN .FunTyp = fb_type(UserData)
+    _END_TYPE()
   CASE "parameters"
     g_markup_parse_context_pop(ctx)
 
@@ -364,24 +387,24 @@ _START_PARSER(type)
 
   SELECT CASE *element_name
   CASE "type"
+    IF .Type_flg = TYPE_LIST THEN EXIT SELECT '         skip sub types
     .Typ = *find_value("name", AttNams, AttVals)
-    VAR c = find_value("c:type", AttNams, AttVals) ' *< local variable
-    IF c THEN .TypC = *c ELSE .TypC = ""
+    VAR t = find_value("c:type", AttNams, AttVals)
+    .TypC = *IIF(t, t, @"")
     SELECT CASE .Typ
-    CASE "GLib.List", "GLib.SList", "GLib.Array"
-      .type_flg = TYPE_LIST
-      g_markup_parse_context_push(ctx, @skip_parser, UserData) 
+    CASE "GLib.List", "GLib.SList", "GLib.Array", "GLib.HashTable"
+      .Type_flg = TYPE_LIST
     CASE ELSE
-      .type_flg = TYPE_VAR
+      .Type_flg = TYPE_VAR
     END SELECT
   CASE "callback"
-    _START_FUNC()
+    _START_FUNC() 
   CASE "array"
-    VAR n = find_value("name", AttNams, AttVals)   ' *< local variable
-    VAR t = find_value("c:type", AttNams, AttVals) ' *< local variable
+    VAR n = find_value("name", AttNams, AttVals)   
+    VAR t = find_value("c:type", AttNams, AttVals) 
     IF n THEN
       .Typ = *n
-      IF t THEN .TypC = *t ELSE .TypC = ""
+      .TypC = *IIF(t, t, @"")
       .ArrayLen = -1
       g_markup_parse_context_push(ctx, @skip_parser, UserData) 
     ELSE
@@ -389,6 +412,7 @@ _START_PARSER(type)
       IF 0 = n THEN n = find_value("fixed-size", AttNams, AttVals)
       IF t THEN .ArrayTyp = *t ELSE .ArrayTyp = ""
       .ArrayLen = IIF(n, CUINT(*n), 0)
+      .Type_flg = 0
       g_markup_parse_context_push(ctx, @type_parser, UserData) 
     END IF
   CASE "varargs"
@@ -397,19 +421,18 @@ _END_PARSER(type)
 
   SELECT CASE *element_name
   CASE "type"
-    IF .Type_flg = TYPE_LIST THEN g_markup_parse_context_pop(ctx)
   CASE "callback"
     _END_FUNC()
   CASE "array"
-    .type_flg = TYPE_ARRAY
+    .Type_flg = TYPE_ARRAY
     g_markup_parse_context_pop(ctx)
   CASE "varargs"
-    .type_flg = TYPE_VARARG
+    .Type_flg = TYPE_VARARG
   CASE ELSE
     g_markup_parse_context_pop(ctx)
   END SELECT
 
-END WITH : END SUB ' no _P2() macro since we need the Type_parser above
+END WITH : END SUB ' no _P2() macro since we need the Type_parser declaration above
 '& };
 
 '* The \GMP for the interfaces, records and classes (OOP style -> ToDo)
@@ -423,16 +446,16 @@ _START_PARSER(class)
     _START_FUNC()
   CASE "field"
     .FieldNam = *FB_NAM.rep(find_value("name", AttNams, AttVals))
-    VAR bits = find_value("bits", AttNams, AttVals) ' *< local variable
+    VAR bits = find_value("bits", AttNams, AttVals) 
     .FieldBits = IIF(bits, CUINT(*bits), 0)
-    g_markup_parse_context_push(ctx, @type_parser, UserData) 
+    _START_TYPE()
   CASE "property"
     .FunNam = *FB_NAM.rep(find_value("name", AttNams, AttVals))
-    VAR r = find_value("readable", AttNams, AttVals) ' *< local variable
-    VAR w = find_value("writable", AttNams, AttVals) ' *< local variable
+    VAR r = find_value("readable", AttNams, AttVals) 
+    VAR w = find_value("writable", AttNams, AttVals) 
     .PropRW  = IIF(r ANDALSO *r = "0", 0, 1)
     .PropRW += IIF(w ANDALSO *w = "0", 0, 2)
-    g_markup_parse_context_push(ctx, @type_parser, UserData) 
+    _START_TYPE()
   CASE "virtual-method"
     .ParaCnt = 0 : .ParaStr = "(" : .FunTyp = ""
     .FunNam = *FB_NAM.rep(find_value("name", AttNams, AttVals))
@@ -445,10 +468,10 @@ _END_PARSER(class)
   CASE "constructor"
     .BlockCnt += 1
     _END_FUNC()
-    IF .type_flg <> TYPE_FUN THEN .Raus(.Level) &= NL "'' ??? CTOR w/o type"
+    IF .Type_flg <> TYPE_FUN THEN .Raus(.Level) &= NL "'' ??? CTOR w/o type"
 
     .Raus(.Level) &= NL "  DECLARE CONSTRUCTOR " & .ParaStr
-    VAR dll = "__" & .BlockCnt ' *< local variable
+    VAR dll = "__" & .BlockCnt 
     .Raus(.Level) &= NL "  " & dll & " AS FUNCTION" & .ParaStr & " AS " & .FunTyp _
                   & " = DYLIBSYMBOL(" & .OopDll & ", """ & .FunDll & """)"
 
@@ -459,10 +482,10 @@ _END_PARSER(class)
     NEXT
     .Raus(0) &= NL "  __Obj = " & dll & "(" & .ParaStr & ")"
     .Raus(0) &= NL "END CONSTRUCTOR"
-    .type_flg = 0
+    .Type_flg = 0
   CASE "field"
     .BlockCnt += 1
-    SELECT CASE AS CONST .type_flg
+    SELECT CASE AS CONST .Type_flg
     CASE TYPE_SUB
       .Raus(.Level) &= NL "  " & .FieldNam & " AS SUB CDECL" & .ParaStr
     CASE TYPE_FUN
@@ -470,12 +493,12 @@ _END_PARSER(class)
     CASE ELSE
       .Raus(.Level) &= NL "  AS " & fb_type(UserData) & " " & .FieldNam 
       IF .FieldBits THEN .Raus(.Level) &= " : " & .FieldBits
-    END SELECT : .type_flg = 0
-    g_markup_parse_context_pop(ctx)
+    END SELECT : .Type_flg = 0
+    _END_TYPE()
   CASE "virtual-method"
     .BlockCnt += 1
     _END_FUNC()
-    SELECT CASE AS CONST .type_flg
+    SELECT CASE AS CONST .Type_flg
     CASE TYPE_SUB : .Raus(.Level) &= NL "  " & .FunNam & " AS SUB CDECL" & .ParaStr
     CASE ELSE : .Raus(.Level) &= NL "  " & .FunNam & " AS FUNCTION CDECL" & .ParaStr & " AS " & .FunTyp
     END SELECT
@@ -484,16 +507,16 @@ _END_PARSER(class)
     _END_FUNC()
     VAR dll = "__" & .BlockCnt
 
-    VAR p = INSTR(.ParaStr, ", ") ' *< local variable
-    VAR par = "("                 ' *< local variable
+    VAR p = INSTR(.ParaStr, ", ") 
+    VAR par = "("                 
     IF p THEN par &= MID(.ParaStr, p + 2) ELSE par &= ")"
 
-    VAR parcall =  UCASE(.NamSpace & "_" & .Nams(.Level)) & "(@THIS)" ' *< local variable
+    VAR parcall =  UCASE(.NamSpace & "_" & .Nams(.Level)) & "(@THIS)" 
     FOR i AS INTEGER = 1 TO .ParaCnt - 1
       parcall &= ", P" & i
     NEXT
 
-    SELECT CASE AS CONST .type_flg
+    SELECT CASE AS CONST .Type_flg
     CASE TYPE_SUB
       .Raus(.Level) &= NL "  DECLARE SUB " & .FunNam & par
       .Raus(.Level) &= NL "  " & dll & " AS SUB" & .ParaStr _
@@ -508,7 +531,7 @@ _END_PARSER(class)
       .Raus(0) &= NL "FUNCTION " & .Nams(.Level) & "." & .FunNam & par & " AS " & .FunTyp
       .Raus(0) &= NL "  RETURN " & dll & "(" & parcall & ")"
       .Raus(0) &= NL "END FUNCTION"
-    END SELECT : .type_flg = 0
+    END SELECT : .Type_flg = 0
   CASE "property" ' !!!
     FOR i AS INTEGER = 0 TO LEN(.FunNam) - 1
       IF .FunNam[i] = ASC("-") THEN .FunNam[i] = ASC("_")
@@ -527,7 +550,7 @@ _END_PARSER(class)
       .Raus(0) &= NL "  g_object_set(__Obj, """ & .FunNam & """, P1, NULL)"
       .Raus(0) &= NL "END PROPERTY"
     END IF
-    g_markup_parse_context_pop(ctx)
+    _END_TYPE()
   CASE "implements"
 
 _NEW_PARSER(class)
@@ -546,7 +569,7 @@ _START_PARSER(udt)
     .FieldNam = *FB_NAM.rep(IIF(c, c, n))
     VAR bits = find_value("bits", AttNams, AttVals)
     .FieldBits = IIF(bits, CUINT(*bits), 0)
-    g_markup_parse_context_push(ctx, @type_parser, UserData) 
+    _START_TYPE()
   CASE "virtual-method"
     g_markup_parse_context_push(ctx, @skip_parser, UserData) 
   CASE "constructor", "method", "function"
@@ -558,28 +581,28 @@ _END_PARSER(udt)
   SELECT CASE *element_name
   CASE "field"
     .BlockCnt += 1
-    SELECT CASE AS CONST .type_flg
+    SELECT CASE AS CONST .Type_flg
     CASE TYPE_SUB
       .Raus(.Level) &= NL "  " & .FieldNam & " AS SUB CDECL" & .ParaStr
     CASE TYPE_FUN
       .Raus(.Level) &= NL "  " & .FieldNam & " AS FUNCTION CDECL" & .ParaStr & " AS " & .FunTyp
     CASE ELSE
       .Raus(.Level) &= NL "  AS " & fb_type(UserData) & " " & .FieldNam 
-      IF .type_flg = TYPE_ARRAY ANDALSO .ArrayLen > 0 _
+      IF .Type_flg = TYPE_ARRAY ANDALSO .ArrayLen > 0 _
         THEN .Raus(.Level) &= "(" & .ArrayLen - 1 & ")"
       IF .FieldBits THEN .Raus(.Level) &= " : " & .FieldBits
-    END SELECT : .type_flg = 0
-    g_markup_parse_context_pop(ctx)
+    END SELECT : .Type_flg = 0
+    _END_TYPE()
   CASE "virtual-method"
     g_markup_parse_context_pop(ctx)
   CASE "method", "function", "constructor"
     _END_FUNC()
-    SELECT CASE AS CONST .type_flg
+    SELECT CASE AS CONST .Type_flg
     CASE TYPE_SUB
       .Raus(0) &= NL "DECLARE SUB " & .FunNam & .ParaStr
     CASE ELSE
       .Raus(0) &= NL "DECLARE FUNCTION " & .FunNam & .ParaStr & " AS " & .FunTyp
-    END SELECT : .type_flg = 0
+    END SELECT : .Type_flg = 0
   CASE "property" ' !!!
 
 _NEW_PARSER(udt)
@@ -594,12 +617,12 @@ _START_PARSER(unio)
 
   SELECT CASE *element_name
   CASE "field"
-    VAR n = find_value("name", AttNams, AttVals)         ' *< local variable
-    VAR c = find_value("c:identifier", AttNams, AttVals) ' *< local variable
+    VAR n = find_value("name", AttNams, AttVals)         
+    VAR c = find_value("c:identifier", AttNams, AttVals) 
     .FieldNam = *FB_NAM.rep(IIF(OOP, n, IIF(c, c, n)))
-    VAR bits = find_value("bits", AttNams, AttVals)      ' *< local variable
+    VAR bits = find_value("bits", AttNams, AttVals)      
     .FieldBits = IIF(bits, CUINT(*bits), 0)
-    g_markup_parse_context_push(ctx, @type_parser, UserData) 
+    _START_TYPE()
   CASE "record"
     .Level += 1 : IF .Level > UBOUND(.Raus) THEN ?"Raus maximum exeded!"
     IF .Level > .RausMax THEN .RausMax = .Level
@@ -614,7 +637,7 @@ _END_PARSER(unio)
   SELECT CASE *element_name
   CASE "field"
     .BlockCnt += 1
-    SELECT CASE AS CONST .type_flg
+    SELECT CASE AS CONST .Type_flg
     CASE TYPE_SUB
       .Raus(.Level) &= NL "  " & .FieldNam & " AS SUB CDECL" & .ParaStr
     CASE TYPE_FUN
@@ -622,8 +645,8 @@ _END_PARSER(unio)
     CASE ELSE
       .Raus(.Level) &= NL "  AS " & fb_type(UserData) & " " & .FieldNam 
       IF .FieldBits THEN .Raus(.Level) &= " : " & .FieldBits
-    END SELECT : .type_flg = 0
-    g_markup_parse_context_pop(ctx)
+    END SELECT : .Type_flg = 0
+    _END_TYPE()
   CASE "record"
     .BlockCnt += 1
     .Raus(.Level) &= NL "END TYPE"
@@ -642,7 +665,7 @@ _START_PARSER(enum)
   SELECT CASE *element_name
   CASE "member"
     VAR nam = *FB_NAM.rep(find_value(*IIF(OOP, @"name", @"c:identifier"), AttNams, AttVals)) 
-    VAR value = find_value("value", AttNams, AttVals) ' *< local variable
+    VAR value = find_value("value", AttNams, AttVals) 
     PRINT #.FnrBi, NL "  " & nam;
     IF value THEN PRINT #.FnrBi, " = " & CINT(*value);
 
@@ -662,11 +685,11 @@ _START_PARSER(pass1)
 
   SELECT CASE *element_name
   CASE "constant"
-    VAR n = find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals) ' *< local variable
+    VAR n = find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals) 
     IF 0 = n THEN n = find_value("c:identifier", AttNams, AttVals)
     .FieldNam = *FB_NAM.rep(n)
     .FieldVal = *find_value("value", AttNams, AttVals)
-    g_markup_parse_context_push(ctx, @type_parser, UserData) 
+    _START_TYPE()
   CASE "enumeration", "bitfield"
     VAR nam = *FB_NAM.rep(find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals)) 
 
@@ -677,14 +700,14 @@ _START_PARSER(pass1)
     IF OOP THEN PRINT #.FnrBi, " EXPLICIT";
     g_markup_parse_context_push(ctx, @enum_parser, UserData) 
   CASE "alias"
-    VAR n = find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals) ' *< local variable
+    VAR n = find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals) 
     IF 0 = n THEN n = find_value("glib:type-name", AttNams, AttVals)
     IF n THEN .FieldNam = *FB_NAM.rep(n) ELSE .FieldNam = ""
-    g_markup_parse_context_push(ctx, @type_parser, UserData) 
+    _START_TYPE() 
   CASE "class", "record", "interface"
-    VAR n = find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals) ' *< local variable
+    VAR n = find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals) 
     IF 0 = n THEN n = find_value("glib:type-name", AttNams, AttVals)
-    VAR nam = *FB_NAM.rep(n) ' *< local variable
+    VAR nam = *FB_NAM.rep(n) 
     PRINT #.FnrBi, NL "TYPE AS _" & nam & " " & nam;
   CASE "include"
     PRINT #.FnrBi, NL "#INCLUDE ONCE """ & _
@@ -694,7 +717,7 @@ _START_PARSER(pass1)
     PRINT #.FnrBi, NL "' Repository version " & *find_value("version", AttNams, AttVals);
   CASE "namespace"
     IF 0 = LEN(.NamSpace) THEN .NamSpace = *find_value("name", AttNams, AttVals)
-    VAR dll = find_value("shared-library", AttNams, AttVals) + 3 ' *< local variable
+    VAR dll = find_value("shared-library", AttNams, AttVals) + 3 
     IF dll > 3 ANDALSO 0 = LEN(.NamDLL) THEN .NamDll = LEFT(*dll, INSTR(*dll, ".so") - 1)
 
     IF 0 = OOP THEN EXIT SELECT
@@ -716,7 +739,7 @@ _END_PARSER(pass1)
     CASE ELSE
       PRINT #.FnrBi, " " & .FieldVal;
     END SELECT
-    g_markup_parse_context_pop(ctx)
+    _END_TYPE()
   CASE "enumeration", "bitfield"
     PRINT #.FnrBi, NL "END ENUM";
     g_markup_parse_context_pop(ctx)
@@ -724,7 +747,7 @@ _END_PARSER(pass1)
     IF LEN(.FieldNam) _
       THEN PRINT #.FnrBi, NL "TYPE AS " & fb_type(UserData) & " " & .FieldNam; _
       ELSE PRINT #.FnrBi, NL "TYPE AS ANY " & fb_type(UserData); 
-    g_markup_parse_context_pop(ctx)
+    _END_TYPE()
   CASE "class", "record", "interface"
   CASE "include", "repository", "namespace"
 
@@ -764,15 +787,15 @@ _START_PARSER(passX)
   SELECT CASE *element_name
   CASE "interface", "class"
     IF 0 = OOP THEN '                              generate class macros
-      VAR g = find_value("glib:get-type", AttNams, AttVals) ' *< local variable
+      VAR g = find_value("glib:get-type", AttNams, AttVals) 
       IF g ANDALSO *g <> "intern" THEN
-        VAR s = find_value("glib:type-struct", AttNams, AttVals) _' *< local variable
-         , t1 = UCASE(.NamSpace) & "_" _                 ' *< local variable
-          , p = INSTR(*g, "_") _                         ' *< local variable
-         , t2 = UCASE(MID(*g, p + 1, LEN(*g) - p - 9)) _ ' *< local variable
-         , t3 = t1 & "TYPE_" & t2 _                      ' *< local variable
-         , t4 = t3 & ", " & *g _                         ' *< local variable
-         , t5 = .NamSpace & *s                           ' *< local variable
+        VAR s = find_value("glib:type-struct", AttNams, AttVals) _
+         , t1 = UCASE(.NamSpace) & "_" _                 
+          , p = INSTR(*g, "_") _                         
+         , t2 = UCASE(MID(*g, p + 1, LEN(*g) - p - 9)) _ 
+         , t3 = t1 & "TYPE_" & t2 _                      
+         , t4 = t3 & ", " & *g _                         
+         , t5 = .NamSpace & *s                           
 
         .Raus(0) &= NL "DECLARE FUNCTION " & *g & "() AS GType"
         .Raus(0) &= NL "#DEFINE " & t3 & " (" & *g & "())"
@@ -836,7 +859,7 @@ _END_PARSER(passX)
     g_markup_parse_context_pop(ctx)
   CASE "callback"
     _END_FUNC()
-    SELECT CASE AS CONST .type_flg
+    SELECT CASE AS CONST .Type_flg
     CASE TYPE_SUB : PRINT #.FnrBi, NL "TYPE " & .FunNam & " AS SUB CDECL" & .ParaStr;
     CASE ELSE : PRINT #.FnrBi, NL "TYPE " & .FunNam & " AS FUNCTION CDECL" & .ParaStr & " AS " & .FunTyp;
     END SELECT
@@ -864,10 +887,10 @@ _END_PARSER(pass4)
   CASE "function"
     IF .FuncSkip THEN EXIT SELECT
     _END_FUNC()
-    SELECT CASE AS CONST .type_flg
+    SELECT CASE AS CONST .Type_flg
     CASE TYPE_SUB :  PRINT #.FnrBi, NL "DECLARE SUB " & .FunNam & .ParaStr;
     CASE ELSE :  PRINT #.FnrBi, NL "DECLARE FUNCTION " & .FunNam & .ParaStr & " AS " & .FunTyp;
-    END SELECT : .type_flg = 0
+    END SELECT : .Type_flg = 0
   CASE "repository"
   CASE "namespace"
     PRINT #.FnrBi, NL "END EXTERN"

@@ -132,7 +132,7 @@ it's used for symbol names (without white-spaces).
 '/
 SUB Stack.add(BYVAL S AS CONST gchar PTR)
   IF 0 = find(S) THEN Dat &= *S & Sep : EXIT SUB
-  ?"found double <first>: " & *S
+  ?" found double <first>: " & *S
 END SUB
 
 

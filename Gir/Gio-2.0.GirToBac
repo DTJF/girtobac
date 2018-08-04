@@ -6,18 +6,20 @@
 <name search="g_file_monitor" add='_ ALIAS "g_file_monitor"'/>
 
 <type search="int" replace="gint /'int'/"/>
-<type search="char" replace="gchar /'char'/"/>
-<type search="void" replace="any /'void'/"/>
+<type search="char /'?'/" replace="gint8 /'char'/"/>
+<type search="char" replace="zstring /'char'/"/>
+<type search="void" replace="any ptr /'void'/"/>
 <type search="uid_t" replace="gint32 /'uid_t'/"/>
 <type search="pid_t" replace="gint32 /'pid_t'/"/>
 <type search="goffset" replace="gint32 /'goffset'/"/>
-<type search="GLib.Variant" replace="GVariant ptr /'GLib.Variant'/"/>
 <type search="const gchar* const" replace="const gchar ptr const /'const gchar* const'/"/>
 <type search="const char* const" replace="const gchar ptr const /'const char* const'/"/>
 
 <first search="GAsyncReadyCallback"/>
 <first search="GInputStream"/>
 <first search="GInputStreamClass"/>
+<first search="GInputVector"/>
+<first search="GInputMessage"/>
 <first search="GOutputStream"/>
 <first search="GOutputStreamClass"/>
 <first search="GFilterInputStream"/>
@@ -45,3 +47,4 @@
 <first search="GSimpleAsyncThreadFunc"/>
 <first search="GTaskThreadFunc"/>
 <first search="GFileMeasureProgressCallback"/>
+<first search="GVfsFileLookupFunc"/>

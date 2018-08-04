@@ -73,7 +73,7 @@ diff GLib-2.0.bi GLib-2.0.bi.org
    ~~~
 2,4c2,4
 < '                       ### GirToBac ###
-< ' LGPLv2.1 (C) 2013-2015 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
+< ' LGPLv2.1 (C) 2013-2018 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
 < ' Auto-translated from file ../example/GLib-2.0.gir
 ---
 > '                       ### girtobac ###
@@ -160,16 +160,16 @@ Create your header by following these steps:
 ## Translation
 
 -# Jump to your output folder and call \Proj for translation
-   ~~~{.sh}
+   ~~~{.txt}
 /PATH/TO/girtobac /usr/lib/girepository-1.0/Xyz-1.0
 ~~~
 
 -# Create a test file (ie. `test.bas` in any folder) containing the line
-   ~~~{.bas}
+   ~~~{.txt}
 #INCLUDE ONCE "Gir/Xyz-1.0.bi"
 ~~~
    and compile it
-   ~~~{.sh}
+   ~~~{.txt}
 fbc -wall test.bas
 ~~~
 
@@ -195,7 +195,7 @@ the error messages thrown by the fbc when compiling the test file,
 different entries should be done:
 
 - <B>Duplicated definition ...</B> There's a naming conflict. This
-  sometimes when
+  happens when
   - a function is declared twice in the `*.gir` file,
   - fbc interpretes a name non-case-sensitve, or
   - a FB keyword is used as a C symbol name.
@@ -210,16 +210,23 @@ different entries should be done:
 - <B>Expected identifier ...</B> There's a conflict between the C
   type name and an FB keyword. Or a C type is used that wasn't
   priviously specified. Rename the type to make it unique or known.
-  Example:
+  Example (`Soup-2.4.GirToBac`):
   ~~~{.xml}
 <type search='int' replace='gint' />
 ~~~
 
-- <B>Illegal specification ...</B> The symbol named in the error
-  message isn't specified before this position (code line). Its
-  declaration needs to get move forward. Example:
+- <B>Illegal specification ...</B> or <B>Incomplete type ...</B> The
+  symbol named in the error message isn't specified before this
+  position (code line). If it's a standard C-type like `float`, the
+  type should get replaced by a similar GLib (or FB) type. This needs a
+  line like
   ~~~{.xml}
-<first search='synbol_name' />
+<type search='float' replace="single /'replaced float'/"/>
+~~~
+  Otherwise, in case of a library specific type, the declaration of
+  this UDT needs to get moved forward. Example (`Gio-2.0.GirToBac`):
+  ~~~{.xml}
+<first search="GInputStream"/>
 ~~~
 
 - <B>File not found, "Xyz-0.0.bi"</B> The library depends on an other
@@ -242,7 +249,7 @@ formated and is named by the same base-name and with suffix
 folder (where the output gets written). Ie. (see also \ref SecStart)
 when the \Proj tool gets called by
 
-~~~{.sh}
+~~~{.txt}
 girtobac ../example/GLib-2.0
 ~~~
 
@@ -253,7 +260,8 @@ without any rules. The generated output gets written to the file
 `GLib-2.0.bi` in the current folder (where \Proj is called
 from).
 
-Adaption rules may get specified for
+As mentioned in the previous paragraph, adaption rules may get
+specified for
 
 - a mismatch between the library name and its internal namespace
 - naming conflicts in variable names (because C naming is
@@ -268,18 +276,18 @@ Adaption rules may get specified for
 - a missmatch between the library name and the name declared in the
   `*.gir` file.
 
-Therefor the parser for the configuration file understands six XML-tags
-and -- depending on the tag type -- the attributes `name`, `add`
-and `replace`:
+Therefor the parser for the configuration file understands several
+XML-tags and -- depending on the tag type -- the attributes `name`,
+`add` and `replace`. Here's a list of the tags:
 
 - <b>binary</b> to override the name of the binary. This is useful if
   the `.gir` file doesn't contain the right library name.
-  Example (cairo):
+  Example (`cairo-1.0.GirToBac`):
   ~~~{.xml}
 <binary name='cairo' />
 ~~~
 - <b>check</b> to enclose the complete header source by
-  ~~~{.bas}
+  ~~~{.txt}
 #IFNDEF symbol
 ...
 #ENDIF
@@ -287,15 +295,15 @@ and `replace`:
   This is useful for a dummy binding that contains just a few type
   declarations. To avoid interferences with the complete binding, the
   dummy source can get switched of.
-  Example (cairo):
+  Example (`cairo-1.0.GirToBac`):
   ~~~{.xml}
 <check name='CAIRO_H' />
 ~~~
 
 - <b>code</b> to prepend the header by user defined text (source code).
-  The code is prepended before the dependency headers get included, but
-  after the header `_GirToBac-0.0.bi`. Ie. this can include further
-  headers or provide additional declarations. Example
+  The code is prepended before including other dependency headers, but
+  after the standard header `_GirToBac-0.0.bi`. Ie. this can include
+  further headers or provide additional declarations. Example
   (`Soup-2.4.GirToBac`):
   ~~~{.xml}
 <code>
@@ -310,15 +318,17 @@ and `replace`:
 ~~~
 
 - <b>first</b> to re-order the symbol declaration (`search` contains a
-  single word, no attribute). Declare this symbol before the rest.
-  Example:
+  single word, no attribute). It declares this symbol before the
+  others, in the specified order (re-ordering the `first` tags may help
+  to solve circular references). Example (`Gtk-3.0.GirToBac`):
   ~~~{.xml}
 <first search='GtkWidget' />
 <first search='GtkWidgetClass' />
 ~~~
+
 - <b>name</b> to adapt a symbol name (`search` contains a single word,
   further attributes `add` or `replace`).
-  Example:
+  Example (`Gtk-3.0.GirToBac`):
   ~~~{.xml}
 <name search='gtk_stock_add' add='_ ALIAS "gtk_stock_add"' />
 ~~~
@@ -328,17 +338,18 @@ and `replace`:
 ~~~
 - <b>pack</b> to adapt the library namespace (attribute `name`
   contains the new name in camel case letters).
-  Example (GLib):
+  Example (`GLib-2.0.GirToBac`):
   ~~~{.xml}
 <pack name='G' />
 ~~~
-  or (GooCanvas):
+  or (`GooCanvas-2.0.GirToBac`):
   ~~~{.xml}
 <pack name='Goo' />
 ~~~
-- <b>type</b> to adapt types (`search` contains any text, further
-  attributes `add` or `replace`).
-  Example:
+
+- <b>type</b> to adapt types (`search` attribute contains any text,
+  further attributes `add` or `replace`). Example
+  (`GLib-2.0.GirToBac`):
   ~~~{.xml}
 <type search='GIconv' add=' PTR' />
 ~~~
@@ -348,27 +359,58 @@ and `replace`:
  <type search='const char* const' replace='CONST gchar PTR CONST' />
 ~~~
 
-The text in the attribute `search` needs to be specified
-case-sensitive. It may contain more then one word in case of a `type`
-rule, but just one word for `name` and `first` rules. `replace` and
-`add` attributes are used as-is in the output.
+The text in the attribute `search` is applied to the input, it has to
+be specified case-sensitive. It contains just one word for `name` and
+`first` rules. In case of a `type` rule it may contain more then one
+word, but no asterix characters (`*`) at the end. Attributes `replace`
+and `add` are used for the output, they get transfered as-is.
 
 \note The folder `Gir` contains the configuration files generated
       during \Proj development and testing. Check them for further
       examples.
 
-\Proj reports duplicated tags while reading the control file. The first
-tag gets used in that case and all further get skipped (no overrides).
-After translating the `*.gir` file, \Proj reports about nonexistent
-symbols (defined in a `search` attribute but not existing in the
-`*.gir` file). You can remove the corresponding tags from the control
-file in order to spead up the translation process.
+\Proj reports duplicated tags while reading the control file. It outputs messages like
+
+~~~{.txt}
+loading Gtk-3.0.GirToBac found double <first>: GtkRcPropertyParser
+~~~
+
+The first tag gets used in that case and all further tags with the same
+fuunction get skipped (no overrides). And, when finished, \Proj reports
+about nonexistent symbols (which are defined in a `search` attribute
+but not existing in the `*.gir` file). Those messages look like
+
+~~~{.txt}
+Symbols in Gdk-3.0.GirToBac, but not in /usr/share/gir-1.0/Gdk-3.0.gir:
+
+	TouchpadGesturePhase <name>
+~~~
+
+You can remove the corresponding tags from the control file in order to
+spead up the translation process.
 
 The control files should be shipped together with the translated header
-files. On one hand side this helps the users to learn about the
-differences between the C and the FB header. On the other hand side the
-control file helps anyone who want to generate an up-date for the
-header, further on.
+files. On the one hand this helps users to learn about the differences
+between the C and the FB header. On the other hand the control file
+helps anyone who want to generate an up-date for the FB header, further
+on.
+
+
+# Char Types
+
+In C syntax the `char` (= `gchar`) type is either a numerical value (FB
+type `BYTE`) or a string text (FB type `ZSTRING`). There's no issue
+when a pointer is declared in the C library. \Proj just passes the
+declaration to the output (the `char` type is defined in the standard
+header `_GirToBac-0.0.bi` as FB type `ZSTRING`). But when the type is
+used without a pointer, \Proj can not determine if it should be a
+numerical value or a single character. Therefor this type declaration
+gets marked, in order to either handle it manually or to auto-replace
+it by a type rule, like
+
+~~~{.xml}
+<type search="unsigned char /'?'/" replace="guint8" />
+~~~
 
 
 Have fun, share your results.

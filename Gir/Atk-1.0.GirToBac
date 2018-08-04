@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
 
-<name search="_AtkPropertyValues" replace="AtkPropertyValues"/>
-<name search="_AtkRegistry" replace="AtkRegistry"/>
-<name search="_AtkRegistryClass" replace="AtkRegistryClass"/>
-
 <first search="AtkFunction"/>
 <first search="AtkFocusHandler"/>
 <first search="AtkPropertyChangeHandler"/>

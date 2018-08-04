@@ -1,7 +1,17 @@
 <?xml version="1.0"?>
 
+<code>
+#IFNDEF sockaddr
+ TYPE sa_family_t AS USHORT ' from bits/sockaddr.bi
+ TYPE sockaddr
+  sa_family AS sa_family_t
+  sa_data(0 TO 14-1) AS UBYTE
+ END TYPE
+#ENDIF
+</code>
+
 <type search='int' replace='gint' />
-<type search='GObject.Value' replace='GValue' />
+<type search="char /'?'/" replace='gint8' />
 
 <first search='SoupAuthDomainClass' />
 <first search='SoupSessionCallback' />
@@ -27,13 +37,3 @@
 <name search='soup_session_add_feature' add='_ ALIAS "soup_session_add_feature"' />
 <name search='soup_session_add_feature_by_type' add='_ ALIAS "soup_session_add_feature_by_type"' />
 <name search='soup_session_remove_feature_by_type' add='_ ALIAS "soup_session_remove_feature_by_type"' />
-
-<code>
-#IFNDEF sockaddr
- TYPE sa_family_t AS USHORT ' from bits/sockaddr.bi
- TYPE sockaddr
-  sa_family AS sa_family_t
-  sa_data(0 TO 14-1) AS UBYTE
- END TYPE
-#ENDIF
-</code>

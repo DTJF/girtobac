@@ -44,12 +44,12 @@ related websides, linked by the name in the first column.
 
 -# Install cmakefbc, if wanted. That's easy, when you have GIT and CMake.
    Execute the commands
-   ~~~{.sh}
+   ~~~{.txt}
    git clone https://github.com/DTJF/cmakefbc
    cd cmakefbc
    mkdir build
    cd build
-   cmake ..
+   cmake .. -DCMAKE_MODULE_PATH=../cmake/Modules
    make
    sudo make install
    ~~~
@@ -57,12 +57,12 @@ related websides, linked by the name in the first column.
 
 -# And similar, install fb-doc, if wanted, using GIT and CMake.
    Execute the commands
-   ~~~{.sh}
+   ~~~{.txt}
    git clone https://github.com/DTJF/fb-doc
    cd fb-doc
    mkdir build
    cd build
-   cmake ..
+   cmakefbc ..
    make
    sudo make install
    ~~~
@@ -80,7 +80,7 @@ Using GIT is the prefered way to download the \Proj package (since it
 helps users to get involved in to the development process). Get your
 copy and change to the source tree by executing
 
-~~~{.sh}
+~~~{.txt}
 git clone https://github.com/DTJF/girtobac
 cd girtobac
 ~~~
@@ -119,8 +119,8 @@ out-of-source build. The later should be your prefered choise.
 The following command triple will compile the executable in the source
 tree and install it on your system:
 
-~~~{.sh}
-cmake .
+~~~{.txt}
+cmakefbc .
 make
 sudo make install
 ~~~
@@ -136,10 +136,10 @@ The following command quintuple will create a new *build* folder,
 change to that folder, compile the executable and install it on your
 system:
 
-~~~{.sh}
+~~~{.txt}
 mkdir build
 cd build
-cmake ..
+cmakefbc ..
 make
 sudo make install
 ~~~
@@ -154,7 +154,7 @@ section \ref SecTools have to get installed. The following command will
 build the documentation in form of an HTML file tree and in form of a
 PDF file (either in-source or out-of-source):
 
-~~~{.sh}
+~~~{.txt}
 make doc
 ~~~
 
@@ -163,7 +163,7 @@ make doc
 
 Both targets can get build separately by executing
 
-~~~{.sh}
+~~~{.txt}
 make doc_htm
 make doc_pdf
 ~~~
@@ -176,7 +176,7 @@ make doc_pdf
 In order to build the executable change from the package root directory
 to the *src* folder and compile by executing
 
-~~~{.sh}
+~~~{.txt}
 cd src
 fbc -e -w all girtobac.bas
 ~~~
@@ -195,7 +195,7 @@ and Graphviz. Then change from the package root directory to the *doc*
 folder, up-date the file *fb-doc.lfn*, execute the Doxygen generator
 and adapt correct listings by executing
 
-~~~{.sh}
+~~~{.txt}
 cd doc
 fb-doc -l
 doxygen Doxyfile

@@ -338,8 +338,6 @@
 <name search="GDK_KEY_Ohorn" add="_"/>
 <name search="GDK_KEY_Uhorn" add="_"/>
 <name search="GDK_PROPERTY_DELETE" add="_"/>
-<name search="GDK_THREADS_ENTER" add="_"/>
-<name search="GDK_THREADS_LEAVE" add="_"/>
 <name search="GDK_KEY_Ch" add="_"/>
 <name search="GDK_KEY_CH" add="__"/>
 <name search="GDK_KEY_C_h" add="_"/>
@@ -354,8 +352,10 @@
 <type search="PropertyState" replace="GdkPropertyState"/>
 <type search="cairo_format_t" replace="any ptr /' cairo_format_t '/"/>
 <type search="cairo_content_t" replace="any ptr /' cairo_content_t '/"/>
+<type search="TouchpadGesturePhase" replace="GdkTouchpadGesturePhase"/>
 
 <first search="GdkEventAny"/>
+<first search="GdkRectangle"/>
 <first search="GdkEventExpose"/>
 <first search="GdkEventVisibility"/>
 <first search="GdkEventMotion"/>
@@ -374,5 +374,11 @@
 <first search="GdkEventWindowState"/>
 <first search="GdkEventSetting"/>
 <first search="GdkEventGrabBroken"/>
+<first search="GdkEventTouchpadSwipe"/>
+<first search="GdkEventTouchpadPinch"/>
 <first search="GdkWindowChildFunc"/>
 <first search="GdkWindowInvalidateHandlerFunc"/>
+<first search="GdkEventPadButton"/>
+<first search="GdkEventPadAxis"/>
+<first search="GdkEventPadGroupMode"/>
+<first search="GdkSeatGrabPrepareFunc"/>

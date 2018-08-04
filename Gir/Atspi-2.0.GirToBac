@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<code>
+#INCLUDE ONCE "crt/time.bi"
+TYPE AS _DBusServer DBusServer
+TYPE AS _DBusConnection DBusConnection
+#IFNDEF timeval ' from crt/sys/linux/time.bi
+TYPE timeval
+	tv_sec AS __time_t
+	tv_usec AS __suseconds_t
+END TYPE
+#ENDIF
+</code>
+
+<type search="int" replace="gint /'int'/"/>
+<type search="void" replace="any /'void'/"/>
+
+<first search="AtspiObject"/>
+<first search="AtspiObjectClass"/>
+<first search="AtspiDeviceListenerCB"/>
+<first search="AtspiDeviceListenerSimpleCB"/>
+<first search="AtspiEventListenerCB"/>
+<first search="AtspiEventListenerSimpleCB"/>

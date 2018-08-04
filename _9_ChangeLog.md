@@ -32,20 +32,21 @@ Here's a list of the published versions:
 
 New:
 
+- renamed for GIT (in lower case now)
 - GIT version control system
-- renamed for GIT (lower case)
 - hosted on GitHub.com
 - CMake build scripts for executable and documentation
-- code listings clean of documentational comments (fb-doc-0.4.0)
+- code listings skip documentational comments (fb-doc-0.4.0)
 - options -h and -v
 
 Bugfixes:
 
-- Minor adaptions in the documentation context
+- improved translation of lists and hash tables
 - more user information in output
 - optimzed caller / callee graphs (fb-doc-0.4.0)
+- Minor adaptions in the documentation context
 
-Released on 2015 October, ??  .
+Released on 2015 October, 11.
 
 
 ## GirToBac-0.2  {#SubSecV-0-2}

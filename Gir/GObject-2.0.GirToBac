@@ -11,8 +11,11 @@
 <name search="g_type_fundamental" add='_ ALIAS "g_type_fundamental"'/>
 
 <type search="int" replace="gint /'int'/"/>
+<type search="gchar /'?'/" replace="gint8 /'gchar'/"/>
+<!--
 <type search="GPixdataType" replace="GdkPixdataType /'GPixdataType'/"/>
 <type search="GPixdataDumpType" replace="GdkPixdataDumpType /'GPixdataDumpType'/"/>
+-->
 
 <first search="GCallback"/>
 <first search="GClosureNotify"/>
