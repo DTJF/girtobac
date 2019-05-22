@@ -9,8 +9,9 @@
 <name search='webkit_minor_version' add='_ ALIAS "webkit_minor_version"'/>
 
 <type search="JSGlobalContextRef" add=" PTR"/>
-<type search="JSObjectRef" add=" PTR"/>
+<type search="void" replace="any /'void'/"/>
 <type search="int" replace="gint /'int'/"/>
+<type search="JSObjectRef" replace="ANY PTR /'JSObjectRef'/"/>
 <type search="unsigned long long" replace="guint64 /'unsigned long long'/"/>
 
 <first search="WebKitDOMObject"/>

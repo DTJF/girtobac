@@ -117,6 +117,15 @@ FUNCTION find_value( _
 END FUNCTION
 
 
+/'* \brief Macro to read data from parser context
+
+This is an essential macro to find and read data in the parser #Context
+data.
+
+\since 0.4.2
+'/
+#DEFINE fetch(_T_) find_value(_T_, AttNams, AttVals) 
+
 /'* \brief Macro to start a parser
 
 Each parser uses the same parameter list for the start function.
@@ -152,7 +161,7 @@ with the _NEW_PARSER() macro.
 #MACRO _END_PARSER(_N_)
   CASE ELSE
     'PRINT #.FnrBi, NL "  ' " & __FB_FUNCTION__ & " Skipping " & *element_name _
-        ' & " """ & *find_value("name", AttNams, AttVals) & """";
+        ' & " """ & *fetch("name") & """";
     g_markup_parse_context_push(ctx, @Skip_parser, UserData) '& skip_parser();
   END SELECT
   END WITH
@@ -225,12 +234,12 @@ several times, so this macro makes it unique (single source).
 '/
 #MACRO _START_FUNC() 
   .ParaCnt = 0 : .ParaStr = "(" : .FunTyp = ""
-  .GErrr = find_value("throws", AttNams, AttVals)
+  .GErrr = fetch("throws")
   IF OOP THEN
-    .FunNam = *FB_NAM.rep(find_value("name", AttNams, AttVals))
-    .FunDll = *find_value("c:identifier", AttNams, AttVals)
+    .FunNam = *FB_NAM.rep(fetch("name"))
+    .FunDll = *fetch("c:identifier")
   ELSE
-    .FunNam = *FB_NAM.rep(find_value("c:identifier", AttNams, AttVals))
+    .FunNam = *FB_NAM.rep(fetch("c:identifier"))
   END IF
   g_markup_parse_context_push(ctx, @func_parser, UserData)
 #ENDMACRO
@@ -324,7 +333,7 @@ _START_PARSER(para)
   SELECT CASE *element_name
   CASE "parameter", "instance-parameter"
     'if OOP then
-      'var d = find_value("direction", AttNams, AttVals)
+      'var d = fetch("direction")
       '.ParaBy = iif(*d <> "in", 1, 0)
     'end if
     _START_TYPE()
@@ -387,30 +396,32 @@ _START_PARSER(type)
 
   SELECT CASE *element_name
   CASE "type"
-    IF .Type_flg = TYPE_LIST THEN EXIT SELECT '         skip sub types
-    .Typ = *find_value("name", AttNams, AttVals)
-    VAR t = find_value("c:type", AttNams, AttVals)
-    .TypC = *IIF(t, t, @"")
-    SELECT CASE .Typ
-    CASE "GLib.List", "GLib.SList", "GLib.Array", "GLib.HashTable"
-      .Type_flg = TYPE_LIST
-    CASE ELSE
-      .Type_flg = TYPE_VAR
-    END SELECT
+    IF .Type_flg = TYPE_LIST THEN EXIT SELECT ' skip sub types
+     .Typ = *fetch("name")
+     VAR t = fetch("c:type")
+     .TypC = *IIF(t, t, @"")
+     SELECT CASE .Typ
+     CASE "GLib.List", "GLib.SList", "GLib.HashTable", "GLib.Array"
+       .Type_flg = TYPE_LIST
+       g_markup_parse_context_push(ctx, @skip_parser, UserData) 
+     CASE ELSE
+       .Type_flg = TYPE_VAR
+     END SELECT
   CASE "callback"
     _START_FUNC() 
   CASE "array"
-    VAR n = find_value("name", AttNams, AttVals)   
-    VAR t = find_value("c:type", AttNams, AttVals) 
+    VAR n = fetch("name")   
+    VAR t = fetch("c:type") 
     IF n THEN
       .Typ = *n
       .TypC = *IIF(t, t, @"")
+      .ArrayTyp = *IIF(t, t, @"")
       .ArrayLen = -1
       g_markup_parse_context_push(ctx, @skip_parser, UserData) 
     ELSE
-      n = find_value("length", AttNams, AttVals)
-      IF 0 = n THEN n = find_value("fixed-size", AttNams, AttVals)
-      IF t THEN .ArrayTyp = *t ELSE .ArrayTyp = ""
+      n = fetch("length")
+      IF 0 = n THEN n = fetch("fixed-size")
+      .ArrayTyp = *IIF(t, t, @"")
       .ArrayLen = IIF(n, CUINT(*n), 0)
       .Type_flg = 0
       g_markup_parse_context_push(ctx, @type_parser, UserData) 
@@ -421,6 +432,7 @@ _END_PARSER(type)
 
   SELECT CASE *element_name
   CASE "type"
+    IF .Type_flg = TYPE_LIST THEN g_markup_parse_context_pop(ctx)
   CASE "callback"
     _END_FUNC()
   CASE "array"
@@ -445,20 +457,20 @@ _START_PARSER(class)
   CASE "method", "function", "constructor"
     _START_FUNC()
   CASE "field"
-    .FieldNam = *FB_NAM.rep(find_value("name", AttNams, AttVals))
-    VAR bits = find_value("bits", AttNams, AttVals) 
+    .FieldNam = *FB_NAM.rep(fetch("name"))
+    VAR bits = fetch("bits") 
     .FieldBits = IIF(bits, CUINT(*bits), 0)
     _START_TYPE()
   CASE "property"
-    .FunNam = *FB_NAM.rep(find_value("name", AttNams, AttVals))
-    VAR r = find_value("readable", AttNams, AttVals) 
-    VAR w = find_value("writable", AttNams, AttVals) 
+    .FunNam = *FB_NAM.rep(fetch("name"))
+    VAR r = fetch("readable") 
+    VAR w = fetch("writable") 
     .PropRW  = IIF(r ANDALSO *r = "0", 0, 1)
     .PropRW += IIF(w ANDALSO *w = "0", 0, 2)
     _START_TYPE()
   CASE "virtual-method"
     .ParaCnt = 0 : .ParaStr = "(" : .FunTyp = ""
-    .FunNam = *FB_NAM.rep(find_value("name", AttNams, AttVals))
+    .FunNam = *FB_NAM.rep(fetch("name"))
     g_markup_parse_context_push(ctx, @func_parser, UserData) 
   CASE "implements"
 
@@ -564,10 +576,10 @@ _START_PARSER(udt)
 
   SELECT CASE *element_name
   CASE "field"
-    VAR n = find_value("name", AttNams, AttVals)
-    VAR c = find_value("c:identifier", AttNams, AttVals)
+    VAR n = fetch("name")
+    VAR c = fetch("c:identifier")
     .FieldNam = *FB_NAM.rep(IIF(c, c, n))
-    VAR bits = find_value("bits", AttNams, AttVals)
+    VAR bits = fetch("bits")
     .FieldBits = IIF(bits, CUINT(*bits), 0)
     _START_TYPE()
   CASE "virtual-method"
@@ -617,16 +629,16 @@ _START_PARSER(unio)
 
   SELECT CASE *element_name
   CASE "field"
-    VAR n = find_value("name", AttNams, AttVals)         
-    VAR c = find_value("c:identifier", AttNams, AttVals) 
+    VAR n = fetch("name")         
+    VAR c = fetch("c:identifier") 
     .FieldNam = *FB_NAM.rep(IIF(OOP, n, IIF(c, c, n)))
-    VAR bits = find_value("bits", AttNams, AttVals)      
+    VAR bits = fetch("bits")      
     .FieldBits = IIF(bits, CUINT(*bits), 0)
     _START_TYPE()
   CASE "record"
     .Level += 1 : IF .Level > UBOUND(.Raus) THEN ?"Raus maximum exeded!"
     IF .Level > .RausMax THEN .RausMax = .Level
-    VAR nam = *FB_NAM.rep(find_value("name", AttNams, AttVals)) 
+    VAR nam = *FB_NAM.rep(fetch("name")) 
     .Nams(.Level) = "__G2B_" & .Nams(.Level - 1) & "_" & nam
     .Raus(.Level - 1) &= NL "  AS " & .Nams(.Level) & " " & nam
     .Raus(.Level) &= NL "TYPE " & .Nams(.Level)
@@ -664,8 +676,8 @@ _START_PARSER(enum)
 
   SELECT CASE *element_name
   CASE "member"
-    VAR nam = *FB_NAM.rep(find_value(*IIF(OOP, @"name", @"c:identifier"), AttNams, AttVals)) 
-    VAR value = find_value("value", AttNams, AttVals) 
+    VAR nam = *FB_NAM.rep(fetch(*IIF(OOP, @"name", @"c:identifier"))) 
+    VAR value = fetch("value") 
     PRINT #.FnrBi, NL "  " & nam;
     IF value THEN PRINT #.FnrBi, " = " & CINT(*value);
 
@@ -685,13 +697,13 @@ _START_PARSER(pass1)
 
   SELECT CASE *element_name
   CASE "constant"
-    VAR n = find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals) 
-    IF 0 = n THEN n = find_value("c:identifier", AttNams, AttVals)
+    VAR n = fetch(IIF(OOP, @"name", @"c:type")) 
+    IF 0 = n THEN n = fetch("c:identifier")
     .FieldNam = *FB_NAM.rep(n)
-    .FieldVal = *find_value("value", AttNams, AttVals)
+    .FieldVal = *fetch("value")
     _START_TYPE()
   CASE "enumeration", "bitfield"
-    VAR nam = *FB_NAM.rep(find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals)) 
+    VAR nam = *FB_NAM.rep(fetch(IIF(OOP, @"name", @"c:type"))) 
 
     IF LEN(nam) THEN PRINT #.FnrBi, NL "TYPE AS LONG " & nam;
     PRINT #.FnrBi, NL "ENUM";
@@ -700,29 +712,29 @@ _START_PARSER(pass1)
     IF OOP THEN PRINT #.FnrBi, " EXPLICIT";
     g_markup_parse_context_push(ctx, @enum_parser, UserData) 
   CASE "alias"
-    VAR n = find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals) 
-    IF 0 = n THEN n = find_value("glib:type-name", AttNams, AttVals)
+    VAR n = fetch(IIF(OOP, @"name", @"c:type")) 
+    IF 0 = n THEN n = fetch("glib:type-name")
     IF n THEN .FieldNam = *FB_NAM.rep(n) ELSE .FieldNam = ""
     _START_TYPE() 
   CASE "class", "record", "interface"
-    VAR n = find_value(IIF(OOP, @"name", @"c:type"), AttNams, AttVals) 
-    IF 0 = n THEN n = find_value("glib:type-name", AttNams, AttVals)
+    VAR n = fetch(IIF(OOP, @"name", @"c:type")) 
+    IF 0 = n THEN n = fetch("glib:type-name")
     VAR nam = *FB_NAM.rep(n) 
     PRINT #.FnrBi, NL "TYPE AS _" & nam & " " & nam;
   CASE "include"
     PRINT #.FnrBi, NL "#INCLUDE ONCE """ & _
-       *find_value("name", AttNams, AttVals) & "-" & _
-       *find_value("version", AttNams, AttVals) & ".bi""";
+       *fetch("name") & "-" & _
+       *fetch("version") & ".bi""";
   CASE "repository"
-    PRINT #.FnrBi, NL "' Repository version " & *find_value("version", AttNams, AttVals);
+    PRINT #.FnrBi, NL "' Repository version " & *fetch("version");
   CASE "namespace"
-    IF 0 = LEN(.NamSpace) THEN .NamSpace = *find_value("name", AttNams, AttVals)
-    VAR dll = find_value("shared-library", AttNams, AttVals) + 3 
+    IF 0 = LEN(.NamSpace) THEN .NamSpace = *fetch("name")
+    VAR dll = fetch("shared-library") + 3 
     IF dll > 3 ANDALSO 0 = LEN(.NamDLL) THEN .NamDll = LEFT(*dll, INSTR(*dll, ".so") - 1)
 
     IF 0 = OOP THEN EXIT SELECT
     IF dll > 3 THEN
-      .OopDll = "__G2B_" & *find_value("name", AttNams, AttVals)
+      .OopDll = "__G2B_" & *fetch("name")
       PRINT #.FnrBi, NL "DIM SHARED AS ANY PTR " & .OopDll;
       PRINT #.FnrBi, NL .OopDll & " = DYLIBLOAD(""" & .NamDll & """)";
     END IF
@@ -764,10 +776,10 @@ _START_PARSER(passX)
   CASE "repository", "namespace" : EXIT SUB
   END SELECT
 
-  VAR n = find_value(*IIF(OOP, @"name", @"c:type"), AttNams, AttVals)
+  VAR n = fetch(*IIF(OOP, @"name", @"c:type"))
   IF 0 = n THEN
-    n = find_value("glib:type-name", AttNams, AttVals)
-    IF 0 = n THEN n = find_value("name", AttNams, AttVals)
+    n = fetch("glib:type-name")
+    IF 0 = n THEN n = fetch("name")
   END IF
   IF FIRST.A = -1 THEN '                                    we're in P_3
     IF FIRST.find(n) THEN '                       element allready done?
@@ -787,9 +799,9 @@ _START_PARSER(passX)
   SELECT CASE *element_name
   CASE "interface", "class"
     IF 0 = OOP THEN '                              generate class macros
-      VAR g = find_value("glib:get-type", AttNams, AttVals) 
+      VAR g = fetch("glib:get-type") 
       IF g ANDALSO *g <> "intern" THEN
-        VAR s = find_value("glib:type-struct", AttNams, AttVals) _
+        VAR s = fetch("glib:type-struct") _
          , t1 = UCASE(.NamSpace) & "_" _                 
           , p = INSTR(*g, "_") _                         
          , t2 = UCASE(MID(*g, p + 1, LEN(*g) - p - 9)) _ 
@@ -825,7 +837,7 @@ _START_PARSER(passX)
     g_markup_parse_context_push(ctx, @unio_parser, UserData) 
   CASE "callback"
     .ParaCnt = 0 : .ParaStr = "(" : .FunTyp = ""
-    .FunNam = *FB_NAM.rep(find_value(*IIF(OOP, @"name", @"c:type"), AttNams, AttVals)) 
+    .FunNam = *FB_NAM.rep(fetch(*IIF(OOP, @"name", @"c:type"))) 
     g_markup_parse_context_push(ctx, @func_parser, UserData) 
 
 _END_PARSER(passX)
@@ -876,7 +888,7 @@ _START_PARSER(pass4)
 
   SELECT CASE *element_name
   CASE "function"
-    .FuncSkip = find_value("moved-to", AttNams, AttVals)
+    .FuncSkip = fetch("moved-to")
     IF .FuncSkip THEN EXIT SELECT
     _START_FUNC() 
   CASE "repository", "namespace"

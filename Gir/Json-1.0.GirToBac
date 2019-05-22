@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
 
+<type search="int" replace="gint /'int'/"/>
+
 <first search="JsonArrayForeach"/>
 <first search="JsonObjectForeach"/>

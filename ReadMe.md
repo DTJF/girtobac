@@ -34,7 +34,7 @@ filtering.)
 License
 =======
 
-GPLv3: Copyright (C) 2013-2016, Thomas{ doT ]Freiherr[ At ]gmx[ DoT }net
+GPLv3: Copyright (C) 2013-2019, Thomas{ doT ]Freiherr[ At ]gmx[ DoT }net
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
