@@ -24,7 +24,8 @@ context of the input files (*.gir) and the control files (*.GirToBac).
 
 '/
 
-#INCLUDE ONCE "../Gir/GLib-2.0.bi"
+'#INCLUDE ONCE "../Gir/GLib-2.0.bi"
+#INCLUDE ONCE "Gir/GLib-2.0.bi"
 #INCLUDE ONCE "girtobac_text.bi"
 
 CONST OOP = 0 '*< a flag to generate classic (C-like) headers or OOP style (currently only classic style is supported since fbc isn't ready yet)
