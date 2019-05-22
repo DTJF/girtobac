@@ -797,6 +797,14 @@ _START_PARSER(passX)
   END IF
 
   SELECT CASE *element_name
+  CASE "enumeration"
+    IF 0 = OOP THEN '                       generate type macro/function
+      VAR g = fetch("glib:get-type") : IF 0 = g THEN EXIT SELECT
+      VAR p1 = INSTR(*g, "_"), p2 = INSTR(p1 + 1, *g, "_get_type") 
+      VAR n = LEFT(*g, p1 - 1) & "_TYPE_" & MID(*g, p1 + 1, p2 - p1 - 1)
+     .Raus(0) &= NL "DECLARE FUNCTION " & *g & "() AS GType"
+     .Raus(0) &= NL "#DEFINE " & UCASE(n) & " (" & *g & "())"
+    END IF  
   CASE "interface", "class"
     IF 0 = OOP THEN '                              generate class macros
       VAR g = fetch("glib:get-type") 
@@ -849,6 +857,7 @@ _END_PARSER(passX)
   END IF
 
   SELECT CASE *element_name
+  CASE "enumeration"
   CASE "record", "interface", "class"
     IF .Level <> 1 THEN ?"Raus level <> 1"
     IF .BlockCnt _
