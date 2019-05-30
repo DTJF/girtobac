@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<code>
+#UNDEF true
+#UNDEF false
+TYPE AS BOOLEAN _Bool
+</code>
+
+<first search='graphene_simd4f_t'/>
+<first search='graphene_vec3_t'/>
+<first search='graphene_plane_t'/>
+<first search='graphene_simd4x4f_t'/>
+<first search='graphene_size_t'/>
+
+<type search='unsigned int' replace='guint'/>
+<type search='float' replace='gfloat'/>
+<type search='const float' replace='CONST gfloat'/>

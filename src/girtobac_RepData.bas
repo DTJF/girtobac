@@ -187,10 +187,9 @@ _START_PARSER(G2b)
     VAR s = find_value("search", AttNams, AttVals)  ' *< local variable
     IF 0 = s THEN EXIT SELECT
     VAR r = find_value("replace", AttNams, AttVals) ' *< local variable
-    VAR a = find_value("add", AttNams, AttVals)     ' *< local variable
     IF r THEN FB_TYP.add(s, r) : EXIT SELECT
-
-    VAR e = *s & *a ' *< local variable
+    VAR a = find_value("add", AttNams, AttVals)     ' *< local variable
+    VAR e = *s & *a
     FB_TYP.add(s, e)
   CASE *FB_NAM.Na
     VAR s = find_value("search", AttNams, AttVals)  ' *< local variable
