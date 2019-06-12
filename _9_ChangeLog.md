@@ -28,6 +28,17 @@ or feel free to send your ideas directly to the author (\Mail).
 
 Here's a list of the published versions:
 
+## girtobac-0.4.6  {#SubSecV-0-4-6}
+
+New:
+
+Bugfixes:
+
+- generate method, function, constructor in a UNION
+
+Released on 2019 ???, ??.
+
+
 ## girtobac-0.4  {#SubSecV-0-4}
 
 New:

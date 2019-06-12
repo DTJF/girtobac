@@ -16,11 +16,11 @@ LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 # constants
 SET(PROJ_NAME "girtobac"           CACHE STRING "project name" FORCE)
 SET(PROJ_DESC "Create FB Headers from GObject Introspection *.gir files" CACHE STRING "project description" FORCE)
-SET(PROJ_VERS "0.4.4"              CACHE STRING "project version" FORCE)
+SET(PROJ_VERS "0.4.5"              CACHE STRING "project version" FORCE)
 SET(PROJ_AUTH "DTJF"               CACHE STRING "project authors" FORCE)
 SET(PROJ_MAIL "Thomas{ doT ]Freiherr[ At ]gmx[ DoT }net"  CACHE STRING "project mail address" FORCE)
 SET(PROJ_WEBS "https://github.com/DTJF/girtobac" CACHE STRING "project website" FORCE)
-SET(PROJ_LICE "LGPLv2"             CACHE STRING "project licence" FORCE)
+SET(PROJ_LICE "GPLv3"              CACHE STRING "project licence" FORCE)
 SET(PROJ_YEAR "2019"               CACHE STRING "project year" FORCE)
 
 # declare the project name and the language (compiler) to use

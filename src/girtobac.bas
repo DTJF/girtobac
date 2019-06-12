@@ -585,7 +585,7 @@ _START_PARSER(udt)
     _START_TYPE()
   CASE "virtual-method"
     g_markup_parse_context_push(ctx, @skip_parser, UserData) 
-  CASE "constructor", "method", "function"
+  CASE "method", "function", "constructor"
     _START_FUNC()
   CASE "property"
 
@@ -636,6 +636,8 @@ _START_PARSER(unio)
     VAR bits = fetch("bits")      
     .FieldBits = IIF(bits, CUINT(*bits), 0)
     _START_TYPE()
+  CASE "method", "function", "constructor"
+    _START_FUNC()
   CASE "record"
     .Level += 1 : IF .Level > UBOUND(.Raus) THEN ?"Raus maximum exeded!"
     IF .Level > .RausMax THEN .RausMax = .Level
@@ -660,6 +662,14 @@ _END_PARSER(unio)
       IF .FieldBits THEN .Raus(.Level) &= " : " & .FieldBits
     END SELECT : .Type_flg = 0
     _END_TYPE()
+  CASE "method", "function", "constructor"
+    _END_FUNC()
+    SELECT CASE AS CONST .Type_flg
+    CASE TYPE_SUB
+      .Raus(0) &= NL "DECLARE SUB " & .FunNam & .ParaStr
+    CASE ELSE
+      .Raus(0) &= NL "DECLARE FUNCTION " & .FunNam & .ParaStr & " AS " & .FunTyp
+    END SELECT : .Type_flg = 0
   CASE "record"
     .BlockCnt += 1
     .Raus(.Level) &= NL "END TYPE"
@@ -841,6 +851,7 @@ _START_PARSER(passX)
     .Raus(.Level) &= NL "TYPE _" & .Nams(.Level)
     g_markup_parse_context_push(ctx, IIF(OOP, @class_parser, @udt_parser), UserData) 
   CASE "union"
+    .BlockCnt = 0
     .Nams(.Level) = *FB_NAM.rep(n)
     .Raus(.Level) = NL "UNION " & .Nams(.Level)
     g_markup_parse_context_push(ctx, @unio_parser, UserData) 
@@ -862,7 +873,7 @@ _END_PARSER(passX)
   CASE "record", "interface", "class"
     IF .Level <> 1 THEN ?"Raus level <> 1"
     IF .BlockCnt _
-      THEN .Raus(1) &= NL "END TYPE" : .BlockCnt = 0 _
+      THEN .Raus(1) &= NL "END TYPE" : .BlockCnt -= 1 _
       ELSE .Raus(1)  = ""
     FOR i AS INTEGER = .RausMax TO 0 STEP -1
       PRINT #.FnrBi, .Raus(i);
@@ -872,7 +883,7 @@ _END_PARSER(passX)
   CASE "union"
     IF .Level <> 1 THEN ?"Raus level <> 1"
     IF .BlockCnt _
-      THEN .Raus(1) &= NL "END UNION" : .BlockCnt = 0 _
+      THEN .Raus(1) &= NL "END UNION" : .BlockCnt -= 1 _
       ELSE .Raus(1)  = "TYPE AS _" & .Nams(.Level) & " " & .Nams(.Level)
     FOR i AS INTEGER = .RausMax TO 0 STEP -1
       PRINT #.FnrBi, .Raus(i);
