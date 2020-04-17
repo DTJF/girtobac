@@ -1,4 +1,14 @@
 <?xml version="1.0"?>
+<code>
+TYPE AS GdkAtom_ PTR GdkAtom
+</code>
+
+<type search="int" replace="gint /'int'/"/>
+<type search="cairo_format_t" replace="any ptr /' cairo_format_t '/"/>
+<type search="cairo_content_t" replace="any ptr /' cairo_content_t '/"/>
+<type search="ModifierType" replace="GdkModifierType /'ModifierType'/"/>
+<type search="PropertyState" replace="GdkPropertyState"/>
+<type search="TouchpadGesturePhase" replace="GdkTouchpadGesturePhase"/>
 
 <name search="GDK_KEY_dead_A" add="_"/>
 <name search="GDK_KEY_dead_E" add="_"/>
@@ -344,16 +354,6 @@
 <name search="GDK_KEY_C_H" add="__"/>
 <name search="GDK_KEY_ezh" add="_"/>
 
-<type search="ModifierType" replace="GdkModifierType /'ModifierType'/"/>
-<type search="GdkAtom" replace="any ptr /'GdkAtom'/"/>
-<type search="GdkEvent" replace="any ptr /'GdkEvent'/"/>
-<type search="const GdkEvent" replace="const any ptr /'const GdkEvent'/"/>
-<type search="int" replace="gint /'int'/"/>
-<type search="PropertyState" replace="GdkPropertyState"/>
-<type search="cairo_format_t" replace="any ptr /' cairo_format_t '/"/>
-<type search="cairo_content_t" replace="any ptr /' cairo_content_t '/"/>
-<type search="TouchpadGesturePhase" replace="GdkTouchpadGesturePhase"/>
-
 <first search="GdkEventAny"/>
 <first search="GdkRectangle"/>
 <first search="GdkEventExpose"/>
@@ -381,4 +381,6 @@
 <first search="GdkEventPadButton"/>
 <first search="GdkEventPadAxis"/>
 <first search="GdkEventPadGroupMode"/>
+<first search="GdkEventFunc"/>
+<first search="GdkEvent"/>
 <first search="GdkSeatGrabPrepareFunc"/>

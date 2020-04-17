@@ -73,11 +73,11 @@ diff GLib-2.0.bi GLib-2.0.bi.org
    ~~~
 2,4c2,4
 < '                       ### GirToBac ###
-< ' LGPLv2.1 (C) 2013-2019 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
+< ' LGPLv2.1 (C) 2013-2020 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
 < ' Auto-translated from file ../example/GLib-2.0.gir
 ---
 > '                       ### girtobac ###
-> ' LGPLv2.1 (C) 2013-2019 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
+> ' LGPLv2.1 (C) 2013-2020 by Thomas[ dot }Freiherr[ at ]gmx[ dot }net
 > ' Auto-translated from file /usr/share/gir-1.0/GLib-2.0.gir
 2526d2525
 < DECLARE FUNCTION g_iconv(BYVAL AS GIConv PTR /'GIConv'/, BYVAL AS gchar PTR PTR, BYVAL AS gsize PTR, BYVAL AS gchar PTR PTR, BYVAL AS gsize PTR) AS gsize

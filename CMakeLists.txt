@@ -1,7 +1,7 @@
 #
 # girtobac - Create FB Headers from GObject Introspection *.gir files
 #
-# Copyright (C) 2013-2019, Thomas{ dOt ]Freiherr[ aT ]gmx[ DoT }net
+# Copyright (C) 2013-2020, Thomas{ dOt ]Freiherr[ aT ]gmx[ DoT }net
 #
 # All rights reserved.
 #
@@ -21,7 +21,7 @@ SET(PROJ_AUTH "DTJF"               CACHE STRING "project authors" FORCE)
 SET(PROJ_MAIL "Thomas{ doT ]Freiherr[ At ]gmx[ DoT }net"  CACHE STRING "project mail address" FORCE)
 SET(PROJ_WEBS "https://github.com/DTJF/girtobac" CACHE STRING "project website" FORCE)
 SET(PROJ_LICE "GPLv3"              CACHE STRING "project licence" FORCE)
-SET(PROJ_YEAR "2019"               CACHE STRING "project year" FORCE)
+SET(PROJ_YEAR "2020"               CACHE STRING "project year" FORCE)
 
 # declare the project name and the language (compiler) to use
 PROJECT(${PROJ_NAME} Fbc)
