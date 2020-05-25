@@ -26,7 +26,7 @@ their distrubution management system (D).
 | [GIT](http://git-scm.com/)                   | R  D | version control system to organize the files                   |
 | [CMake](http://www.cmake.org)                | R  D | build management system to build executables and documentation |
 | [cmakefbc](http://github.com/DTJF/cmakefbc)  | R    | FreeBASIC extension for CMake                                  |
-| [fb-doc](http://github.com/DTJF/fb-doc)      | R    | FreeBASIC extension tool for Doxygen                           |
+| [fbdoc](http://github.com/DTJF/fbdoc)        | R    | FreeBASIC extension tool for Doxygen                           |
 | [Doxygen](http://www.doxygen.org/)           | R  D | documentation generator (ie. for this text)                    |
 | [Graphviz](http://www.graphviz.org/)         | R  D | Graph Visualization Software (caller/callee graphs)            |
 | [LaTeX](https://latex-project.org/ftp.html)  | R  D | A document preparation system (for PDF output)                 |
@@ -55,11 +55,11 @@ related websides, linked by the name in the first column.
    ~~~
    \note Omit `sudo` in case of non-LINUX systems.
 
--# And similar, install fb-doc, if wanted, using GIT and CMake.
+-# And similar, install fbdoc, if wanted, using GIT and CMake.
    Execute the commands
    ~~~{.txt}
-   git clone https://github.com/DTJF/fb-doc
-   cd fb-doc
+   git clone https://github.com/DTJF/fbdoc
+   cd fbdoc
    mkdir build
    cd build
    cmakefbc ..
@@ -190,16 +190,16 @@ that you can install wherever you need it.
 
 ### Documentation
 
-In order to build the documentation, install the tools fb-doc, Doxygen
+In order to build the documentation, install the tools fbdoc, Doxygen
 and Graphviz. Then change from the package root directory to the *doc*
 folder, up-date the file *fb-doc.lfn*, execute the Doxygen generator
 and adapt correct listings by executing
 
 ~~~{.txt}
 cd doc
-fb-doc -l
+fbdoc -l
 doxygen Doxyfile
-fb-doc -s
+fbdoc -s
 ~~~
 
 to build the documentation in subfolders *html* (start file =

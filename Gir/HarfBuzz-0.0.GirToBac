@@ -3,6 +3,9 @@
 <name search='hb_version_string' add='_ ALIAS "hb_version_string"'/>
 
 <type search="const int" replace="const gint /'const int'/"/>
+<type search="const uint8_t" replace="const guint8 /'const uint8_t'/"/>
+<type search="const uint16_t" replace="const guint16 /'const uint16_t'/"/>
+<type search="const uint32_t" replace="const guint32 /'const uint32_t'/"/>
 <type search="int" replace="gint /'int'/"/>
 <type search="void" replace="any /'void'/"/>
 <type search="unsigned" replace="guint /'unsigned'/"/>

@@ -13,6 +13,9 @@
 <type search='int' replace='gint' />
 <type search="char /'?'/" replace='gint8' />
 
+<name search="SOUP_SERVER_ADD_WEBSOCKET_EXTENSION" 	add='_' />
+<name search="SOUP_SERVER_REMOVE_WEBSOCKET_EXTENSION" 	add='_' />
+
 <first search='SoupAuthDomainClass' />
 <first search='SoupSessionCallback' />
 <first search='SoupSessionClass' />
@@ -29,6 +32,8 @@
 <first search='SoupServerCallback' />
 <first search='SoupServerWebsocketCallback' />
 <first search='SoupSocketCallback' />
+<first search='SoupProxyResolverCallback' />
+<first search='SoupSessionConnectProgressCallback' />
 
 <name search='soup_auth_is_authenticated' add='_ ALIAS "soup_auth_is_authenticated"' />
 <name search='soup_auth_is_for_proxy' add='_ ALIAS "soup_auth_is_for_proxy"' />

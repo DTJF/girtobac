@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<code>
+  TYPE AS _GeeHazardPointerContext GeeHazardPointerContext
+'typedef gpointer (*GeeFutureMapFunc) (gconstpointer value, void* user_data);
+'typedef gconstpointer (*GeeFutureLightMapFunc) (gconstpointer value, void* user_data);
+'typedef gpointer (*GeeFutureZipFunc) (gconstpointer a, gconstpointer b, void* user_data);
+'typedef GeeFuture* (*GeeFutureFlatMapFunc) (gconstpointer value, void* user_data);
+</code>
+<type search="void" replace="any /'void'/"/>
+<type search="int" replace="gint /'int'/"/>
+
+<type search="GeeFuturWaitFunc" replace="GeeFutureIface.wait"/>
+<type search="GeeFuturWaitUntilFunc" replace="GeeFutureIface.wait_until"/>
+<type search="GeeFuturWaitAsyncFunc" replace="GeeFutureIface.wait_async"/>
+<type search="GeeFuturWaitFinishFunc" replace="GeeFutureIface.wait_finish"/>
+<type search="GeeFutureMapFunc" replace="GeeFutureIface.map"/>
+<type search="GeeFutureMapBrokenFunc" replace="GeeFutureIface.light_map_broken"/>
+<type search="GeeFutureZipFunc" replace="GeeFutureIface.zip"/>
+<type search="GeeFutureFlatMapFunc" replace="GeeFutureIface.flat_map"/>
+<type search="GeeFutureGetValueFunc" replace="GeeFutureIface.get_value"/>
+<type search="GeeFutureGetReadyFunc" replace="GeeFutureIface.get_ready"/>
+<type search="GeeFutureGetExeptionFunc" replace="GeeFutureIface.get_exception"/>
+
+<first search="GeeForallFunc"/>
+<first search="GeeStreamFunc"/>
+<first search="GeeEqualDataFunc"/>
+<first search="GeeHashDataFunc"/>
+<first search="GeeLazyFunc"/>
+<first search="GeeAbstractCollection"/>
+<first search="GeeAbstractCollectionClass"/>
+<first search="GeeAbstractList"/>
+<first search="GeeAbstractListClass"/>
+<first search="GeeAbstractSet"/>
+<first search="GeeAbstractSetClass"/>
+<first search="GeeAbstractMap"/>
+<first search="GeeAbstractMapClass"/>
+<first search="GeeAbstractSortedSet"/>
+<first search="GeeAbstractSortedSetClass"/>
+<first search="GeeAbstractSortedMap"/>
+<first search="GeeAbstractSortedMapClass"/>
+<first search="GeeFutureIface"/>

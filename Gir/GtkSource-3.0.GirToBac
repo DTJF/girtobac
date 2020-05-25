@@ -4,6 +4,8 @@
 #INCLUDE ONCE "crt/time.bi"
 </code>
 
+<type search="const gchar* const" replace="const gchar ptr const /'const gchar* const'/"/>
+
 <first search="GtkSourceMountOperationFactory"/>
 <first search="GtkSourceView"/>
 <first search="GtkSourceViewClass"/>

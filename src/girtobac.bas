@@ -884,7 +884,7 @@ _END_PARSER(passX)
     IF .Level <> 1 THEN ?"Raus level <> 1"
     IF .BlockCnt _
       THEN .Raus(1) &= NL "END UNION" : .BlockCnt -= 1 _
-      ELSE .Raus(1)  = "TYPE AS _" & .Nams(.Level) & " " & .Nams(.Level)
+      ELSE .Raus(1)  = NL "TYPE AS _" & .Nams(.Level) & " " & .Nams(.Level)
     FOR i AS INTEGER = .RausMax TO 0 STEP -1
       PRINT #.FnrBi, .Raus(i);
       .Raus(i) = ""

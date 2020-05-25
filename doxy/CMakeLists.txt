@@ -1,11 +1,15 @@
 # Build / install the documentation.
 #
-# Note: this script needs an fb-doc version (0.4).
+# Note: this script needs an fbdoc version (0.4).
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.3)
 
 IF(NOT COMMAND FB_DOCUMENTATION)
-  INCLUDE(UseFb-Doc)
+  INCLUDE(UseFbDoc)
+  IF(NOT COMMAND FB_DOCUMENTATION)
+    MSG_LOG("!! no targets <doc...> (UseFbDoc.cmake failed)")
+    RETURN()
+  ENDIF()
 ENDIF()
 
 FB_DOCUMENTATION(

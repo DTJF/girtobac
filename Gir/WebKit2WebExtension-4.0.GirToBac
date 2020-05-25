@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<code>
+  TYPE AS _JSGlobalContextRef JSGlobalContextRef
+  TYPE AS _JSValueRef JSValueRef
+</code>
+
+<type search="JSGlobalContextRef" add=" PTR"/>
+
+<first search="WebKitDOMObject"/>
+<first search="WebKitDOMObjectClass"/>
+<first search="WebKitDOMNode"/>
+<first search="WebKitDOMNodeClass"/>
+<first search="WebKitDOMElement"/>
+<first search="WebKitDOMElementClass"/>
+<first search="WebKitDOMHTMLElement"/>
+<first search="WebKitDOMHTMLElementClass"/>
+<first search="WebKitDOMCharacterData"/>
+<first search="WebKitDOMCharacterDataClass"/>
+<first search="WebKitDOMText"/>
+<first search="WebKitDOMTextClass"/>
+<first search="WebKitDOMStyleSheet"/>
+<first search="WebKitDOMStyleSheetClass"/>
+<first search="WebKitDOMEvent"/>
+<first search="WebKitDOMEventClass"/>
+<first search="WebKitDOMUIEvent"/>
+<first search="WebKitDOMUIEventClass"/>

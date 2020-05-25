@@ -23,6 +23,11 @@ SET(PROJ_WEBS "https://github.com/DTJF/girtobac" CACHE STRING "project website" 
 SET(PROJ_LICE "GPLv3"              CACHE STRING "project licence" FORCE)
 SET(PROJ_YEAR "2020"               CACHE STRING "project year" FORCE)
 
+FUNCTION(MSG_LOG Txt)
+  FILE(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeOutput.log "${Txt}\n\n")
+  MESSAGE(STATUS ${Txt})
+ENDFUNCTION()
+
 # declare the project name and the language (compiler) to use
 PROJECT(${PROJ_NAME} Fbc)
 

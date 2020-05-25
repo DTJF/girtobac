@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+
+<code>TYPE AS _FcConfig FcConfig</code>
+<type search="FT_Face" add=" PTR"/>

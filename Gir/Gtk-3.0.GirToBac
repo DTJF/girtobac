@@ -4,10 +4,10 @@
 
 <type search="GdkAtom" replace="any ptr /'GdkAtom'/"/>
 <type search="int" replace="gint /'int'/"/>
-<type search="unsigned" replace="guint /'unsigned'/"/>
+<type search="unsigned int" replace="guint /'unsigned int'/"/>
 <type search="Window" replace="guint32 /'Window'/"/>
-<type search="void" replace="any /'void'/"/>
 <type search="gunichar /'?'/" replace="gunichar"/>
+<type search="const gchar* const" replace="const gchar ptr const /'const gchar* const'/"/>
 
 <first search="GtkRcPropertyParser"/>
 <first search="GtkTickCallback"/>

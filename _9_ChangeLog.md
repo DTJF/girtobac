@@ -47,14 +47,14 @@ New:
 - GIT version control system
 - hosted on GitHub.com
 - CMake build scripts for executable and documentation
-- code listings skip documentational comments (fb-doc-0.4.0)
+- code listings skip documentational comments (fbdoc-0.4.0)
 - options -h and -v
 
 Bugfixes:
 
 - improved translation of lists and hash tables
 - more user information in output
-- optimzed caller / callee graphs (fb-doc-0.4.0)
+- optimzed caller / callee graphs (fbdoc-0.4.0)
 - Minor adaptions in the documentation context
 
 Released on 2015 October, 11.

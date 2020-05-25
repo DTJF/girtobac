@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+
+<type search="int" replace="gint"/>
+<type search="FT_Face" replace="any ptr /'FT_Face'/"/>

@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 
 <type search="int" replace="gint /'int'/"/>
+<type search="float" replace="gfloat /'float'/"/>
 <type search="unsigned int" replace="guint32 /'unsigned int'/"/>
+<type search="hb_feature_t" replace="any /'hb_feature_t'/"/>
+<type search="hb_font_t" replace="any /'hb_font_t'/"/>
 
 <first search="PangoAttribute"/>
 <first search="PangoColor"/>

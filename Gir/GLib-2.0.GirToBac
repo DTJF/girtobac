@@ -20,7 +20,13 @@
 <type search="goffset" replace="gint32 /'goffset'/"/>
 <type search="long double" replace="double /'long double'/"/>
 <type search="GIConv" replace="GIConv PTR /'GIConv'/"/>
+<type search="GVariant* const" replace="GVariant ptr const /'GVariant* const'/"/>
+<type search="const GVariantType* const" replace="const GVariantType ptr const /'GVariantType* const'/"/>
+<type search="gatomicrefcount" replace="any /'gatomicrefcount'/"/>
+<type search="grefcount" replace="any /'grefcount'/"/>
+<type search="passwd" replace="any /'passwd'/"/>
 
+<first search="GSourceDisposeFunc"/>
 <first search="GDestroyNotify"/>
 <first search="GCompareDataFunc"/>
 <first search="GCompareFunc"/>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<type search="unsigned" replace="guint /'unsigned'/"/>
+<type search="const char" replace="const gchar /'const char'/"/>
+<type search="const char* const" replace="const gchar ptr const /'const char* const'/"/>
+
+<first search="JSCExceptionHandler"/>

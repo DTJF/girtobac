@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<code>
+  TYPE AS _JSGlobalContextRef JSGlobalContextRef
+  TYPE AS _JSValueRef JSValueRef
+</code>
+
+<type search="JSGlobalContextRef" add=" PTR"/>
+<type search="JSValueRef" add=" PTR"/>
+<type search="int" replace="gint /'int'/"/>
+<type search="const gchar* const" replace="const gchar ptr const /'const gchar* const'/"/>
+
+<first search="WebKitPolicyDecision"/>
+<first search="WebKitPolicyDecisionClass"/>
+<first search="WebKitWebViewBase"/>

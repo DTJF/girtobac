@@ -11,6 +11,7 @@
 <type search="JSGlobalContextRef" add=" PTR"/>
 <type search="void" replace="any /'void'/"/>
 <type search="int" replace="gint /'int'/"/>
+<type search="const gchar* const" replace="const gchar ptr const /'const gchar* const'/"/>
 <type search="JSObjectRef" replace="ANY PTR /'JSObjectRef'/"/>
 <type search="unsigned long long" replace="guint64 /'unsigned long long'/"/>
 
