@@ -4,6 +4,8 @@
 This file contains some informational texts for the user interface,
 namely the version and help texts.
 
+Belongs to: @PROJ_NAME@-@PROJ_VERS@, License @PROJ_LICE@
+Copyright (C) 2013-@PROJ_YEAR@ by @PROJ_MAIL@
 '/
 
 #IFDEF __FB_UNIX__
@@ -11,7 +13,7 @@ namely the version and help texts.
  #DEFINE NL !"\n" &
  '* The target operation system
  #DEFINE TARG "UNIX"
-'&/* Doxygen shouldn't see this
+'&/* Doxygen shouldn't parse this
 #ELSE
  #DEFINE NL !"\r\n" &
  #DEFINE TARG "DOS/windows"

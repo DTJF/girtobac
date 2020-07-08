@@ -320,7 +320,13 @@ XML-tags and -- depending on the tag type -- the attributes `name`,
 - <b>first</b> to re-order the symbol declaration (`search` contains a
   single word, no attribute). It declares this symbol before the
   others, in the specified order (re-ordering the `first` tags may help
-  to solve circular references). Example (`Gtk-3.0.GirToBac`):
+  to solve circular references). It's working on
+  * `ENUM`
+  * `UNION`
+  * `TYPE` (UDT)
+  * `TYPE SUB`, `TYPE FUNCTION` (callback prototype, since 0.6)
+
+  Example (`Gtk-3.0.GirToBac`):
   ~~~{.xml}
 <first search='GtkWidget' />
 <first search='GtkWidgetClass' />

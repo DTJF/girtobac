@@ -1,27 +1,25 @@
 <?xml version="1.0"?>
 
 <code>
-  TYPE AS _GeeHazardPointerContext GeeHazardPointerContext
-'typedef gpointer (*GeeFutureMapFunc) (gconstpointer value, void* user_data);
-'typedef gconstpointer (*GeeFutureLightMapFunc) (gconstpointer value, void* user_data);
-'typedef gpointer (*GeeFutureZipFunc) (gconstpointer a, gconstpointer b, void* user_data);
-'typedef GeeFuture* (*GeeFutureFlatMapFunc) (gconstpointer value, void* user_data);
+TYPE AS _HazardPointer HazardPointer
+TYPE AS _GeeHazardPointerContext GeeHazardPointerContext
+
+TYPE GeeFutureMapFunc AS FUNCTION CDECL(BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS gpointer, BYVAL AS any /'void'/ PTR) AS gpointer
+TYPE GeeFutureLightMapFunc AS FUNCTION CDECL(BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS gpointer, BYVAL AS any /'void'/ PTR) AS gpointer
+TYPE GeeFutureZipFunc AS FUNCTION CDECL(BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS gpointer, BYVAL AS gpointer, BYVAL AS any /'void'/ PTR) AS gpointer
+TYPE GeeFutureFlatMapFunc AS FUNCTION CDECL(BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS gpointer, BYVAL AS any /'void'/ PTR) AS gpointer
+TYPE GeeForallFunc AS FUNCTION CDECL(BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS gpointer, BYVAL AS any /'void'/ PTR) AS gboolean
+TYPE GeeStreamFunc AS FUNCTION CDECL(BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS GeeTraversableStream, BYVAL AS gpointer, BYVAL AS gpointer, BYVAL AS any /'void'/ PTR) AS GeeTraversableStream
+TYPE GeeEqualDataFunc AS FUNCTION CDECL(BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS gpointer, BYVAL AS gpointer, BYVAL AS any /'void'/ PTR) AS gboolean
+TYPE GeeHashDataFunc AS FUNCTION CDECL(BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS gpointer, BYVAL AS any /'void'/ PTR) AS guint
+TYPE GeeLazyFunc AS FUNCTION CDECL(BYVAL AS GType, BYVAL AS GBoxedCopyFunc, BYVAL AS GDestroyNotify, BYVAL AS any /'void'/ PTR) AS gpointer
 </code>
+
 <type search="void" replace="any /'void'/"/>
 <type search="int" replace="gint /'int'/"/>
 
-<type search="GeeFuturWaitFunc" replace="GeeFutureIface.wait"/>
-<type search="GeeFuturWaitUntilFunc" replace="GeeFutureIface.wait_until"/>
-<type search="GeeFuturWaitAsyncFunc" replace="GeeFutureIface.wait_async"/>
-<type search="GeeFuturWaitFinishFunc" replace="GeeFutureIface.wait_finish"/>
-<type search="GeeFutureMapFunc" replace="GeeFutureIface.map"/>
-<type search="GeeFutureMapBrokenFunc" replace="GeeFutureIface.light_map_broken"/>
-<type search="GeeFutureZipFunc" replace="GeeFutureIface.zip"/>
-<type search="GeeFutureFlatMapFunc" replace="GeeFutureIface.flat_map"/>
-<type search="GeeFutureGetValueFunc" replace="GeeFutureIface.get_value"/>
-<type search="GeeFutureGetReadyFunc" replace="GeeFutureIface.get_ready"/>
-<type search="GeeFutureGetExeptionFunc" replace="GeeFutureIface.get_exception"/>
 
+<first search="GeeFuture"/>
 <first search="GeeForallFunc"/>
 <first search="GeeStreamFunc"/>
 <first search="GeeEqualDataFunc"/>
