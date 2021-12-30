@@ -1,7 +1,7 @@
 #
 # girtobac - Create FB Headers from GObject Introspection *.gir files
 #
-# Copyright (C) 2013-2021, Thomas{ dOt ]Freiherr[ aT ]gmx[ DoT }net
+# Copyright (C) 2013-2022, Thomas{ dOt ]Freiherr[ aT ]gmx[ DoT }net
 #
 # All rights reserved.
 #
@@ -21,7 +21,7 @@ SET(PROJ_AUTH "DTJF"               CACHE STRING "project authors" FORCE)
 SET(PROJ_MAIL "Thomas{ doT ]Freiherr[ At ]gmx[ DoT }net"  CACHE STRING "project mail address" FORCE)
 SET(PROJ_WEBS "https://github.com/DTJF/girtobac" CACHE STRING "project website" FORCE)
 SET(PROJ_LICE "GPLv3"              CACHE STRING "project licence" FORCE)
-SET(PROJ_YEAR "2021"               CACHE STRING "project year" FORCE)
+SET(PROJ_YEAR "2022"               CACHE STRING "project year" FORCE)
 
 FUNCTION(MSG_LOG Txt)
   FILE(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeOutput.log "${Txt}\n\n")

@@ -53,7 +53,7 @@ before it compiles.)
 License
 =======
 
-GPLv3: Copyright (C) 2013-2021, Thomas{ doT ]Freiherr[ At ]gmx[ DoT }net
+GPLv3: Copyright (C) 2013-2022, Thomas{ doT ]Freiherr[ At ]gmx[ DoT }net
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
